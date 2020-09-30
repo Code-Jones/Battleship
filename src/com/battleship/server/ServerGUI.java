@@ -1,5 +1,7 @@
 package com.battleship.server;
 
+import com.battleship.problemdomain.Message;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -29,9 +31,10 @@ public class ServerGUI {
         return panel;
     }
 
-    public void addMessage(String message) {
-        this.listModel.addElement(message);
+    public void addMessage(Message message) {
+        this.listModel.addElement(message.toString());
     }
+
 
     protected void display() {
         this.frame.setVisible(true);

@@ -1,6 +1,7 @@
 package com.battleship.server;
 
 import com.battleship.problemdomain.ClientConnection;
+import com.battleship.problemdomain.Message;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -13,13 +14,13 @@ public class ServerDriver {
         ServerGUI serverGUI = new ServerGUI();
         serverGUI.display();
         ServerSocket listener = new ServerSocket(1234);
-        serverGUI.addMessage("Waiting for connection port 1234...");
+        serverGUI.addMessage(new Message("Server","Waiting for connection port 1234..."));
         ArrayList<ClientConnection> connections = new ArrayList<>();
 
         while (listener.isBound()) {
             try {
                 Socket client = listener.accept();
-                serverGUI.addMessage("Client connected.");
+                serverGUI.addMessage(new Message("Server","Client connected."));
 
                 InputStream inputStream = client.getInputStream();
                 ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
@@ -35,7 +36,7 @@ public class ServerDriver {
                     ClientConnection connection2 = connections.get(1);
 
                     // Spin up a thread to handle connections
-                    ClientHandler clientHandler = new ClientHandler(connection1, connection2);
+                    ClientHandler clientHandler = new ClientHandler(serverGUI, connection1, connection2);
                     Thread thread = new Thread(clientHandler);
 
                     thread.start();
