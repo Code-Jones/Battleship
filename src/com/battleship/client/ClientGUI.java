@@ -9,8 +9,8 @@ import java.net.Socket;
 
 public class ClientGUI {
 	private final JFrame frame;
-	private DefaultListModel chatListModel;
-	private JList chatList;
+	private DefaultListModel<String> chatListModel;
+	private JList<String> chatList;
 	private String username;
 	private Socket socket;
 	private ObjectOutputStream objectOutputStream;
@@ -32,8 +32,8 @@ public class ClientGUI {
 	private JPanel createChatPanel() {
 		JPanel panel = new JPanel(new BorderLayout());
 		
-		this.chatListModel = new DefaultListModel();
-		this.chatList = new JList(this.chatListModel);
+		this.chatListModel = new DefaultListModel<>();
+		this.chatList = new JList<>(this.chatListModel);
 		
 		JScrollPane scrollPane = new JScrollPane(this.chatList);
 		
@@ -105,9 +105,7 @@ public class ClientGUI {
 				
 				thread.start();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
-				
 				this.addMessage("Unable to connect");
 			}
 			
@@ -127,9 +125,7 @@ public class ClientGUI {
 				
 				this.addMessage("Disconnected");
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
-				
 				this.addMessage("Unable to disconnect");
 			}
 		});
@@ -138,11 +134,7 @@ public class ClientGUI {
 		
 		return panel;
 	}
-	
-	/**
-	 * Add a message to the JList.
-	 * @param message
-	 */
+
 	public void addMessage(String message) {
 		this.chatListModel.addElement(message);
 	}

@@ -6,9 +6,9 @@ import java.net.Socket;
 
 
 public class ClientConnection {
-	private Socket socket;
-	private ObjectInputStream objectInputStream;
-	private ObjectOutputStream objectOutputStream;
+	private final Socket socket;
+	private final ObjectInputStream objectInputStream;
+	private final ObjectOutputStream objectOutputStream;
 	
 	public ClientConnection(Socket socket, ObjectInputStream objectInputStream, ObjectOutputStream objectOutputStream) {
 		this.socket = socket;

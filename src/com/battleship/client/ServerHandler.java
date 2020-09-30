@@ -6,9 +6,9 @@ import java.io.ObjectInputStream;
 import java.net.Socket;
 
 public class ServerHandler implements Runnable {
-	private ClientGUI gui;
-	private Socket server;
-	private ObjectInputStream ois;
+	private final ClientGUI gui;
+	private final Socket server;
+	private final ObjectInputStream ois;
 	
 	public ServerHandler(ClientGUI gui, Socket server, ObjectInputStream ois) {
 		this.gui = gui;

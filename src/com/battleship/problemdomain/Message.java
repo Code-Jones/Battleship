@@ -5,11 +5,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Message implements Serializable {
-	private Date date;
+	private final Date date;
 	
-	private String username;
+	private final String username;
 	
-	private String message;
+	private final String message;
 	
 	public Message(String username, String message) {
 		this.date = new Date();

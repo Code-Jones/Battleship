@@ -10,15 +10,16 @@ import java.util.ArrayList;
 public class ServerDriver {
 
     public static void main(String[] args) throws IOException {
-
+        ServerGUI serverGUI = new ServerGUI();
+        serverGUI.display();
         ServerSocket listener = new ServerSocket(1234);
-        System.out.println("Waiting for connection port 1234...");
+        serverGUI.addMessage("Waiting for connection port 1234...");
         ArrayList<ClientConnection> connections = new ArrayList<>();
 
         while (listener.isBound()) {
             try {
                 Socket client = listener.accept();
-                System.out.println("Client connected.");
+                serverGUI.addMessage("Client connected.");
 
                 InputStream inputStream = client.getInputStream();
                 ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);

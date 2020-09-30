@@ -5,8 +5,8 @@ import com.battleship.problemdomain.Message;
 import java.io.IOException;
 
 public class InputOutputHandler implements Runnable {
-	private ClientConnection input;
-	private ClientConnection output;
+	private final ClientConnection input;
+	private final ClientConnection output;
 	
 	public InputOutputHandler(ClientConnection input, ClientConnection output) {
 		this.input = input;
