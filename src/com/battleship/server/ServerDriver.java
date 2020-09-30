@@ -9,13 +9,22 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 public class ServerDriver {
+    private final ServerSocket listener;
+    private ArrayList<ClientConnection> connections;
+    private final ServerGUI serverGUI;
 
-    public static void main(String[] args) throws IOException {
-        ServerGUI serverGUI = new ServerGUI();
+    ServerDriver() throws IOException {
+        this.listener = new ServerSocket(1234);
+        this.connections = new ArrayList<>();
+        this.serverGUI = new ServerGUI();
         serverGUI.display();
-        ServerSocket listener = new ServerSocket(1234);
+        init();
+    }
+
+    public void init() throws IOException {
         serverGUI.addMessage(new Message("Server","Waiting for connection port 1234..."));
-        ArrayList<ClientConnection> connections = new ArrayList<>();
+        this.connections = new ArrayList<>();
+
 
         while (listener.isBound()) {
             try {
@@ -36,7 +45,7 @@ public class ServerDriver {
                     ClientConnection connection2 = connections.get(1);
 
                     // Spin up a thread to handle connections
-                    ClientHandler clientHandler = new ClientHandler(serverGUI, connection1, connection2);
+                    ClientHandler clientHandler = new ClientHandler(connection1, connection2);
                     Thread thread = new Thread(clientHandler);
 
                     thread.start();

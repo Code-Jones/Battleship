@@ -4,14 +4,23 @@ import com.battleship.problemdomain.Message;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class ServerGUI {
     private final JFrame frame;
-    private DefaultListModel<String> listModel;
+    public DefaultListModel<String> listModel;
+    private ServerDriver serverDriver;
 
     public ServerGUI() {
         this.frame = new JFrame("Server Terminal");
-        this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent event) {
+                close();
+            }
+        });
         this.frame.setLayout(new BorderLayout());
         this.frame.setSize(400, 600);
         this.frame.add(this.createTerminalPanel(), BorderLayout.CENTER);
@@ -35,8 +44,11 @@ public class ServerGUI {
         this.listModel.addElement(message.toString());
     }
 
-
     protected void display() {
         this.frame.setVisible(true);
+    }
+    private void close() {
+        // todo check for open clients and save data
+        System.exit(0);
     }
 }
