@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.jones.Client.ClientGUI_2">
+  <grid id="27dc6" binding="mainPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
+    <constraints>
+      <xy x="20" y="20" width="859" height="553"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <grid id="de1a5" binding="ChatPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
+        <constraints border-constraint="East"/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <scrollpane id="1ee81">
+            <constraints border-constraint="Center"/>
+            <properties>
+              <verticalScrollBarPolicy value="21"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <component id="dc36d" class="javax.swing.JTextField" binding="textField1" default-binding="true">
+                <constraints/>
+                <properties>
+                  <text value=""/>
+                </properties>
+              </component>
+            </children>
+          </scrollpane>
+          <grid id="ed025" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints border-constraint="South"/>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="bcc42" class="javax.swing.JButton" binding="sendButton" default-binding="true">
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="send"/>
+                </properties>
+              </component>
+              <component id="b6371" class="javax.swing.JTextField" binding="textField2" default-binding="true">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="-1"/>
+                  </grid>
+                </constraints>
+                <properties/>
+              </component>
+            </children>
+          </grid>
+        </children>
+      </grid>
+      <grid id="32ae5" binding="topPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
+        <constraints border-constraint="North"/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="f320f" class="javax.swing.JLabel">
+            <constraints border-constraint="Center"/>
+            <properties>
+              <font name="Source Code Pro" size="36"/>
+              <horizontalAlignment value="0"/>
+              <text value="Battleship"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <grid id="1de6c" binding="boardPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
+        <constraints border-constraint="Center"/>
+        <properties/>
+        <border type="bevel-raised">
+          <size top="0" left="0" bottom="0" right="0"/>
+        </border>
+        <children>
+          <grid id="b50a4" layout-manager="BorderLayout" hgap="0" vgap="0">
+            <constraints border-constraint="West"/>
+            <properties/>
+            <border type="empty" title-justification="2">
+              <size top="100" left="50" bottom="100" right="50"/>
+            </border>
+            <children>
+              <grid id="6165d" binding="thisisit" layout-manager="BorderLayout" hgap="0" vgap="0">
+                <constraints border-constraint="Center"/>
+                <properties>
+                  <preferredSize width="250" height="250"/>
+                  <requestFocusEnabled value="true"/>
+                </properties>
+                <border type="none"/>
+                <children/>
+              </grid>
+            </children>
+          </grid>
+          <grid id="b569f" layout-manager="BorderLayout" hgap="0" vgap="0">
+            <constraints border-constraint="East"/>
+            <properties/>
+            <border type="empty" title-justification="2">
+              <size top="100" left="50" bottom="100" right="50"/>
+            </border>
+            <children>
+              <grid id="b41d6" layout-manager="BorderLayout" hgap="0" vgap="0">
+                <constraints border-constraint="Center"/>
+                <properties>
+                  <preferredSize width="250" height="250"/>
+                  <requestFocusEnabled value="true"/>
+                </properties>
+                <border type="none"/>
+                <children/>
+              </grid>
+            </children>
+          </grid>
+        </children>
+      </grid>
+      <grid id="4fcd2" binding="setPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
+        <constraints border-constraint="West"/>
+        <properties/>
+        <border type="empty">
+          <size top="2" left="2" bottom="20" right="0"/>
+        </border>
+        <children>
+          <component id="7b4e4" class="javax.swing.JLabel" binding="placeLable">
+            <constraints border-constraint="North"/>
+            <properties>
+              <font name="Source Code Pro" size="16"/>
+              <horizontalAlignment value="0"/>
+              <text value="Ship Ledger"/>
+            </properties>
+          </component>
+          <component id="49841" class="javax.swing.JButton" binding="setButton">
+            <constraints border-constraint="South"/>
+            <properties>
+              <text value="Set"/>
+            </properties>
+          </component>
+          <grid id="93464" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints border-constraint="Center"/>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="26fe7" class="javax.swing.JComboBox" binding="comboBox1" default-binding="true">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <model>
+                    <item value="Battleship"/>
+                    <item value="AirCraft"/>
+                    <item value="Crusier"/>
+                    <item value="Submarine"/>
+                    <item value="Destroyer"/>
+                  </model>
+                </properties>
+              </component>
+              <vspacer id="a393a">
+                <constraints>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                </constraints>
+              </vspacer>
+            </children>
+          </grid>
+        </children>
+      </grid>
+    </children>
+  </grid>
+</form>
