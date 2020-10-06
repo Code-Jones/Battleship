@@ -5,6 +5,7 @@ import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 import com.jones.Board.GridBuilder;
 import com.jones.ProblemDoimain.Message;
+import com.jones.ProblemDoimain.Ship;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -12,7 +13,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.net.Socket;
-
+import java.util.ArrayList;
 
 public class ClientGUI {
     private final JFrame frame;
@@ -25,8 +26,6 @@ public class ClientGUI {
     JList<Message> chatList;
     MouseListener playModeListener;
     MouseListener setShipsListener;
-    Component[] opponentTiles;
-    Component[] playerTiles;
     boolean isHorizontal;
     JPanel playerBoard;
     JPanel opponentBoard;
@@ -94,13 +93,13 @@ public class ClientGUI {
             }
         };
 
-        this.setPointerListener = new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                System.out.println(e.getPoint().toString());
-            }
-        };
+//        this.setPointerListener = new MouseAdapter() {
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//                super.mouseClicked(e);
+//                System.out.println(e.getPoint().toString());
+//            }
+//        };
 
         this.setShipsListener = new MouseAdapter() {
             @Override
@@ -146,7 +145,7 @@ public class ClientGUI {
         panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(2, 2, 20, 0), null, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
         JLabel placeLabel = new JLabel();
         placeLabel.setFont(new Font("Source Code Pro", -1, 16));
-        placeLabel.setHorizontalAlignment(0);
+        placeLabel.setHorizontalAlignment(SwingConstants.CENTER);
         placeLabel.setText("Ship Ledger");
         panel.add(placeLabel, BorderLayout.NORTH);
         JButton setButton = new JButton();
@@ -182,20 +181,21 @@ public class ClientGUI {
         playerBoard = new GridBuilder(gameController, true);
         opponentBoard = new GridBuilder(gameController, false); // fix to enemiesGrid
 
-        playerBoard.addMouseListener(setShipsListener);
-//        opponentBoard.addMouseListener(setPointerListener);
-
-//        playerBoard.addMouseListener();
-        playerTiles = playerBoard.getComponents();
-        for (Component playerTile : playerTiles) {
-            playerTile.addMouseListener(setPointerListener);
+        // I FUCKING HATE SWING
+        JPanel p = (JPanel) opponentBoard.getComponent(0);
+        Component[] ss = p.getComponents();
+        ArrayList<JPanel> test = new ArrayList<>();
+        for (Component s : ss) {
+            test.add((JPanel) s);
+        }
+        for (JPanel tile : test) {
+            for (MouseListener al : tile.getMouseListeners()) {
+                tile.removeMouseListener(al);
+            }
+            tile.setEnabled(false);
+            tile.setBackground(Color.red);
         }
 
-//        opponentTiles = opponentBoard.getComponents();
-//        for (Component opponentTile : opponentTiles) {
-//            opponentTile.setEnabled(false);
-//                opponentTile.addMouseListener(playModeListener);
-//        }
 
         panel.add(emptyNorthPanel, BorderLayout.NORTH);
         panel.add(emptySouthPanel, BorderLayout.SOUTH);
@@ -239,18 +239,6 @@ public class ClientGUI {
         this.chatListModel.addElement(message);
     }
 
-
-    // player stuff
-
-
-    public void sendCoordinates() {
-
-    }
-
-    public void sendPlayBoard() {
-
-    }
-
     // server stuff
     public void sendMessage(Message message) {
         try {
@@ -259,6 +247,14 @@ public class ClientGUI {
         } catch (IOException e) {
             e.printStackTrace();
             this.addClientMessage(new Message(this.username, "Message could not send"));
+        }
+    }
+
+    public void sendShip(Ship ship) {
+        try {
+            this.outputStream.writeObject(ship);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -281,5 +277,4 @@ public class ClientGUI {
             this.addClientMessage(new Message(this.username, "Unable to connect"));
         }
     }
-
 }

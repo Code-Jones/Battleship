@@ -2,9 +2,10 @@ package com.jones.ProblemDoimain;
 
 import com.jones.Board.Coordinate;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Ship {
+public class Ship implements Serializable {
     ArrayList<Coordinate> coordinates;
     public enum ShipType {
         Battleship,

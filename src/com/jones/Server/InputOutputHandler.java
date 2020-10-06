@@ -2,6 +2,7 @@ package com.jones.Server;
 
 import com.jones.ProblemDoimain.ClientConnection;
 import com.jones.ProblemDoimain.Message;
+import com.jones.ProblemDoimain.Ship;
 
 import java.io.IOException;
 
@@ -23,6 +24,16 @@ public class InputOutputHandler implements Runnable {
 				ServerGUI.addServerMessage(message);
 				this.output.getObjectOutput().writeObject(message);
 			} catch (IOException | ClassNotFoundException e) {
+				System.out.println("sent something, not message");
+				e.printStackTrace();
+			}
+			try {
+				Ship ship = (Ship) this.input.getObjectInput().readObject();
+				System.out.println("Received ship: " + ship.toString());
+				ServerGUI.addServerMessage(new Message(ship.getShipType().toString(), "Received"));
+				this.output.getObjectOutput().writeObject(ship);
+			} catch (IOException | ClassNotFoundException e) {
+				System.out.println("ship went wrong");
 				e.printStackTrace();
 			}
 

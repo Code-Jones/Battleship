@@ -17,19 +17,30 @@ GUI ->
                 // todo because currently it's making ships of 3 rn / on x axis
             - adds ship to player [ gameController.getPlayer().addShip(coordinates) ]
                 -> in Player.addShip(ArrayList<Coordinate> coordinates)
-                    - checks for edge or not //todo fix this
-                    - checks if space is taken by another ship //todo fix this
+                    - checks for edge or not
+                    - checks if space is taken by another ship
                     - checks if < 5 ships
                     - adds to fleet (ArrayList<Ship> fleet)
-            - starts draw() ?
+
 - starts ConnectToServer();
     -> sets up connection to server
 }
 
+
 // todo current issue
-    - new ships make new coordinates everytime. needs to have one global set
-    - than you can check that it won't make over other ships.
-    - fix the ship setting next
-    - than send global set to server
-    - just remembered that stolen did it in a int[][] set... look at that.
-    - probably better as an object thou
+    -> send global set to server / or fleet
+    -> set table with received fleet
+    -> add gameState
+    -> start game
+        -> playing state
+            -> disable or remove west side gui
+            -> make hit listener
+                -> missile class?
+            -> send that to server
+            -> update board with hit
+            -> check if ship sunk or win
+            -> change state
+
+//todo extra
+    -> set up for more than one ship
+    -> make it for vertical ships
