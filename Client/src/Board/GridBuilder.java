@@ -1,7 +1,6 @@
 package Board;
 
 import Client.GameController;
-import ProblemDomain.Ship;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,6 +8,15 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
+
+/**
+ * @author Matt Jones
+ * @version 1
+ *
+ * Grid builder builds the grid from grid abstract class.
+ * Main method in here is the getTile which gets user pointer
+ * to find and set ships for setup
+ */
 public class GridBuilder extends Grid {
     private final GameController gameController;
     public boolean isPlayer;
@@ -21,7 +29,7 @@ public class GridBuilder extends Grid {
     private JPanel thirdNextCell;
 
     public GridBuilder(GameController gameController, boolean isPlayer) {
-        super();
+        super(); // builds grid here
         this.gameController = gameController;
         this.isPlayer = isPlayer;
     }
@@ -38,8 +46,15 @@ public class GridBuilder extends Grid {
         thirdNextCell = this.getComponentAt(newPoint);
     }
 
+    /**
+     * @return returns each tile for the grid to be built in grid
+     *
+     * getTile makes every tile for both grids.
+     * The listener in here listens for the pointer and determines
+     * how to set a ship from that.
+     */
     @Override
-    protected JPanel getCell() {
+    protected JPanel getTile() {
         JPanel tile = new JPanel();
         tile.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
         tile.setPreferredSize(new Dimension(25, 25));

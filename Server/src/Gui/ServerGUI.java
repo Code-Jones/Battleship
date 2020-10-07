@@ -7,6 +7,15 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+/**
+ * @author Matt Jones
+ * @version 1
+ *
+ * Simple Server gui for seeing information about the given games appear
+ * has no real functionality as it's is just supposed to present information
+ * about the given clients on the server
+ */
+
 public class ServerGUI {
     public static DefaultListModel<String> listModel;
     private final JFrame frame;
@@ -26,9 +35,6 @@ public class ServerGUI {
         this.frame.add(this.createTerminalPanel(), BorderLayout.CENTER);
     }
 
-    //    public void addServerMessage(Message message) {
-//        this.listModel.addElement(message.toString());
-//    }
     public static void addServerMessage(Message message) {
         listModel.addElement(message.toString());
     }
@@ -45,8 +51,6 @@ public class ServerGUI {
         panel.add(scrollPane, BorderLayout.CENTER);
         return panel;
     }
-
-//    public static void addMessage(String message) {listModel.addElement(message);}
 
     public void display() {
         this.frame.setVisible(true);

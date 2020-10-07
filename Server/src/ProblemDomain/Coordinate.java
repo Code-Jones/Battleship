@@ -2,6 +2,13 @@ package ProblemDomain;
 
 import java.io.Serializable;
 
+/**
+ * @author Matt Jones
+ * @version 1
+ *
+ * Coordinate class which holds coordinates which relate to the game boards.
+ * Each ship is built of coordinates
+ */
 public class Coordinate implements Serializable {
     public int x;
     public int y;

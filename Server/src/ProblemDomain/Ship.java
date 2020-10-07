@@ -3,14 +3,37 @@ package ProblemDomain;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * @author Matt Jones
+ * @version 1
+ *
+ * Ship class holds information such as coordinates, size and ship type
+ * Sent over server to populate the boards of opponent
+ */
+
 public class Ship implements Serializable {
     ArrayList<Coordinate> coordinates;
     ShipType shipType;
+    int shipSize;
+    public enum ShipType {
+        Battleship,
+        Cruiser,
+        AirCraft,
+        Destroyer,
+        Submarine
+    }
 
+    // old
     public Ship(ArrayList<Coordinate> coordinates, ShipType shipType) {
-
         this.coordinates = coordinates;
         this.shipType = shipType;
+    }
+
+    // new
+    public Ship(ArrayList<Coordinate> coordinates, ShipType shipType, int shipSize) {
+        this.coordinates = coordinates;
+        this.shipType = shipType;
+        this.shipSize = shipSize;
     }
 
     @Override
@@ -76,11 +99,4 @@ public class Ship implements Serializable {
         this.shipType = shipType;
     }
 
-    public enum ShipType {
-        Battleship,
-        Cruiser,
-        AirCraft,
-        Destroyer,
-        Submarine
-    }
 }

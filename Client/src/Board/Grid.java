@@ -3,6 +3,13 @@ package Board;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * @author Matt Jones
+ * @version 1
+ *
+ * Abstract class that builds a grid, uses getTile from class
+ * it's implemented in.
+ */
 public abstract class Grid extends JPanel {
     JPanel self;
 
@@ -13,7 +20,7 @@ public abstract class Grid extends JPanel {
 
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
-                JPanel temp = getCell();
+                JPanel temp = getTile();
                 self.add(temp);
             }
         }
@@ -31,5 +38,5 @@ public abstract class Grid extends JPanel {
         return (JPanel) comp;
     }
 
-    protected abstract JPanel getCell();
+    protected abstract JPanel getTile();
 }

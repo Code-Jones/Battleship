@@ -4,6 +4,15 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+/**
+ * @author Matt Jones
+ * @version 2
+ *
+ * Freshly stolen from Nick Hamnett because i didn't want to rewrite it
+ * Connection class that handles a client connection with their own input
+ * and output object streams
+ */
+
 public class ClientConnection {
 	private final Socket socket;
 	private final ObjectInputStream objectInput;

@@ -4,6 +4,15 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * @author Matt Jones
+ * @version 2
+ *
+ * Freshly stolen from Nick Hamnett because i didn't want to rewrite it with modifications
+ * Standard Message class that is used to send messages between users
+ * holds date, username, and message
+ */
+
 public class Message implements Serializable {
 	private final Date date;
 	private final String username;

@@ -4,19 +4,20 @@ import ProblemDomain.Ship;
 
 import java.io.Serializable;
 
+/**
+ * @author Matt Jones
+ * @version 1
+ *
+ * Coordinate class which holds coordinates which relate to the game boards.
+ * Each ship is built of coordinates
+ */
+
 public class Coordinate implements Serializable {
     public int x;
     public int y;
     public boolean isPartOfShip;
     boolean hit;
     Ship.ShipType shipType;
-
-    // for making new ships // i don't use this
-//    public Coordinate(int x, int y, boolean isPartOfShip) {
-//        this.x = x;
-//        this.y = y;
-//        this.isPartOfShip = true;
-//    }
 
     // for making default coordinates
     public Coordinate(int x, int y) {

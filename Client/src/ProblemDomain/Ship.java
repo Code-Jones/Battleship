@@ -5,14 +5,42 @@ import Board.Coordinate;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * @author Matt Jones
+ * @version 1
+ *
+ * Ship class holds information such as coordinates, size and ship type
+ * Sent over server to populate the boards of opponent
+ */
+
 public class Ship implements Serializable {
+    int shipSize;
     ArrayList<Coordinate> coordinates;
+    ShipType shipType;
     public enum ShipType {
         Battleship,
         Cruiser,
         AirCraft,
         Destroyer,
         Submarine
+    }
+    // old
+    public Ship(ArrayList<Coordinate> coordinates, ShipType shipType) {
+        this.coordinates = coordinates;
+        this.shipType = shipType;
+    }
+    // new
+    public Ship(ArrayList<Coordinate> coordinates, ShipType shipType, int shipSize) {
+        this.coordinates = coordinates;
+        this.shipType = shipType;
+        this.shipSize = shipSize;
+    }
+
+    public void setShipCoordinates(ArrayList<Coordinate> coordinates, String shipType) {
+        for (Coordinate coordinate : coordinates) {
+            coordinate.setPartOfShip(true, ShipType.valueOf(shipType));
+            ShipType.valueOf(shipType);
+        }
     }
 
     @Override
@@ -21,21 +49,6 @@ public class Ship implements Serializable {
                 "coordinates=" + coordinates +
                 ", shipType=" + shipType +
                 '}';
-    }
-
-    ShipType shipType;
-
-    public Ship(ArrayList<Coordinate> coordinates, ShipType shipType) {
-
-        this.coordinates = coordinates;
-        this.shipType = shipType;
-    }
-
-    public void setShipCoordinates(ArrayList<Coordinate> coordinates, String shipType) {
-        for (Coordinate coordinate : coordinates) {
-            coordinate.setPartOfShip(true, ShipType.valueOf(shipType));
-            ShipType.valueOf(shipType);
-        }
     }
 
     public boolean isShipHit(Coordinate hit) {

@@ -15,6 +15,15 @@ import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 
+/**
+ * @author Matt Jones
+ * @version 1
+ *
+ * Client Gui that bridges all interaction with the user
+ * and the rest of the application. Client gui also starts
+ * the connection to the server and hands it over to a
+ * server handler to deal with.
+ */
 public class ClientGUI {
     private final JFrame frame;
     private final String username;
@@ -37,6 +46,7 @@ public class ClientGUI {
     public ClientGUI(String title, GameController gameController) {
 
         //networks stuff
+        // fixme change this before submit
 //        this.username = JOptionPane.showInputDialog("Enter your username");
         this.username = "matt";
         this.ip = "localhost";
@@ -54,58 +64,62 @@ public class ClientGUI {
         });
         this.frame.setTitle(title);
         this.frame.setSize(900, 500);
+        this.frame.setResizable(false);
 
-        //temp
+        //extra
         this.currentShipType = Ship.ShipType.Battleship;
         this.gameController = gameController;
         this.isHorizontal = true;
-        setListeners();
+//        setListeners(); // not sure if needed currently
         buildGUI();
         connectToServer();
     }
 
     // gui stuff
-    private void setListeners() {
-        // all the listeners for the game
-        this.playModeListener = new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                super.mouseEntered(e);
-                if (e.getComponent().getBackground() != Color.YELLOW)
-                    e.getComponent().setBackground(Color.RED);
-            }
+//    private void setListeners() {
+//        // all the listeners for the game
+//        this.playModeListener = new MouseAdapter() {
+//            @Override
+//            public void mouseEntered(MouseEvent e) {
+//                super.mouseEntered(e);
+//                if (e.getComponent().getBackground() != Color.YELLOW)
+//                    e.getComponent().setBackground(Color.RED);
+//            }
+//
+//            @Override
+//            public void mouseExited(MouseEvent e) {
+//                super.mouseExited(e);
+//                if (e.getComponent().getBackground() != Color.YELLOW)
+//                    e.getComponent().setBackground(Color.BLUE);
+//            }
+//
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//                super.mouseClicked(e);
+//                e.getComponent().setBackground(Color.YELLOW);
+//            }
+//        };
+//
+//        this.setShipsListener = new MouseAdapter() {
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//                super.mouseClicked(e);
+//                e.getComponent().setBackground(Color.YELLOW);
+//                String[] cord = e.getSource().toString().split(" ");
+//                int x = Integer.parseInt(cord[0]);
+//                int y = Integer.parseInt(cord[1]);
+//
+//
+//                System.out.println("x: " + x + " y: " + y);
+//            }
+//        };
+//
+//
+//    }
 
-            @Override
-            public void mouseExited(MouseEvent e) {
-                super.mouseExited(e);
-                if (e.getComponent().getBackground() != Color.YELLOW)
-                    e.getComponent().setBackground(Color.BLUE);
-            }
-
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                e.getComponent().setBackground(Color.YELLOW);
-            }
-        };
-
-        this.setShipsListener = new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                e.getComponent().setBackground(Color.YELLOW);
-                String[] cord = e.getSource().toString().split(" ");
-                int x = Integer.parseInt(cord[0]);
-                int y = Integer.parseInt(cord[1]);
-
-
-                System.out.println("x: " + x + " y: " + y);
-            }
-        };
-
-
-    }
-
+    /**
+     * Calls the rest of the panels to be built individually
+     */
     private void buildGUI() {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout(0, 0));
@@ -189,8 +203,6 @@ public class ClientGUI {
         emptyNorthPanel.setPreferredSize(new Dimension(50, 75));
         JPanel emptySouthPanel = new JPanel(new BorderLayout());
         emptySouthPanel.setPreferredSize(new Dimension(50, 75));
-        panel.setBorder(BorderFactory.createLineBorder(Color.GREEN, 2, true));
-
 
         playerBoard = new GridBuilder(gameController, true);
         opponentBoard = new GridBuilder(gameController, false); // fix to enemiesGrid
@@ -253,6 +265,15 @@ public class ClientGUI {
         this.chatListModel.addElement(message);
     }
 
+    public void removeBoatFromComboBox(Ship.ShipType shipType) {
+        for (int i = 0; i < comboBox.getItemCount(); i++) {
+            if (comboBox.getItemAt(i).equals(String.valueOf(shipType))) {
+                System.out.println(comboBox.getItemAt(i) + " removed");
+                comboBox.removeItem(comboBox.getItemAt(i));
+            }
+        }
+    }
+
     // server stuff
     public void sendMessage(Message message) {
         try {
@@ -272,6 +293,9 @@ public class ClientGUI {
         }
     }
 
+    /**
+     * Starts connection with server and lets server handler deal with it
+     */
     public void connectToServer() {
         try {
             Socket socket = new Socket(ip, port);
@@ -292,12 +316,4 @@ public class ClientGUI {
         }
     }
 
-    public void removeBoatFromComboBox(Ship.ShipType shipType) {
-        for (int i = 0; i < comboBox.getItemCount(); i++) {
-            if (comboBox.getItemAt(i).equals(String.valueOf(shipType))) {
-                System.out.println(comboBox.getItemAt(i) + " removed");
-                comboBox.removeItem(comboBox.getItemAt(i));
-            }
-        }
-    }
 }

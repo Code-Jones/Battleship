@@ -1,7 +1,14 @@
 package Server;
-
-
 import ProblemDomain.ClientConnection;
+
+/**
+ * @author Matt Jones
+ * @version 2
+ *
+ * Freshly stolen from Nick Hamnett because i didn't want to rewrite it
+ * Handles two client connection's input and output object streams
+ * and puts them into a single thread
+ */
 
 public class ClientHandler implements Runnable {
 	private final ClientConnection connection1;

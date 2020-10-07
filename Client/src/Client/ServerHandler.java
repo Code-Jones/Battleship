@@ -2,9 +2,19 @@ package Client;
 
 import ProblemDomain.Message;
 import ProblemDomain.Ship;
+import Exception.ObjectNotRecognized;
 
 import java.io.*;
 import java.net.Socket;
+/**
+ * @author Matt Jones
+ * @version 2
+ *
+ * Freshly stolen from Nick Hamnett because i didn't want to rewrite it and modified
+ * Connection class that handles a client connection with the server.
+ * Handles the input and output object streams and receives objects.
+ * Puts into generic object class and checks instance of to determine actions needed.
+ */
 
 public class ServerHandler implements Runnable {
 	private final ClientGUI gui;
@@ -20,7 +30,6 @@ public class ServerHandler implements Runnable {
 	@Override
 	public void run() {
 		while (!this.server.isClosed()) {
-
 			try {
 				Object object = this.inputStream.readObject();
 				if (object instanceof Message) {
@@ -30,8 +39,10 @@ public class ServerHandler implements Runnable {
 					Ship ship = (Ship) object;
 					this.gui.gameController.opponent.addToFleet(ship);
 					System.out.println(this.gui.gameController.opponent.fleet.size());
+				} else {
+					throw new ObjectNotRecognized("Received Object not recognized");
 				}
-			} catch (ClassNotFoundException | IOException e) {
+			} catch (ClassNotFoundException | IOException | ObjectNotRecognized e) {
 				e.printStackTrace();
 			}
 		}
