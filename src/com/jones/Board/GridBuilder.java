@@ -1,7 +1,7 @@
 package com.jones.Board;
 
 import com.jones.Client.GameController;
-import com.jones.ProblemDoimain.Ship;
+import com.jones.ProblemDomain.Ship;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class GridBuilder extends Grid {
     private final GameController gameController;
     public boolean isPlayer;
+    public MouseListener setShipListener;
     private Point firstPoint = new Point(0, 0);
     private Point secondNextPoint = new Point(0, 0);
     private Point thirdNextPoint = new Point(0, 0);
@@ -19,19 +20,18 @@ public class GridBuilder extends Grid {
     private JPanel secondNextCell;
     private JPanel thirdNextCell;
 
-
     public GridBuilder(GameController gameController, boolean isPlayer) {
         super();
         this.gameController = gameController;
         this.isPlayer = isPlayer;
     }
 
-    public void getJpanel(Point newPoint) {
-        thePanel = this.getComponentAt(newPoint);
+    public JPanel getJpanel(Point newPoint) {
+        return thePanel = this.getComponentAt(newPoint);
     }
 
-    public void getComp2(Point newPoint) {
-        secondNextCell = this.getComponentAt(newPoint);
+    public JPanel getComp2(Point newPoint) {
+        return secondNextCell = this.getComponentAt(newPoint);
     }
 
     public void getComp3(Point newPoint) {
@@ -40,18 +40,15 @@ public class GridBuilder extends Grid {
 
     @Override
     protected JPanel getCell() {
-
-        JPanel firstCell = new JPanel();
-        firstCell.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
-        firstCell.setPreferredSize(new Dimension(25, 25));
-        firstCell.setBackground(Color.BLUE);
-//        firstCell.setBackground(this.isPlayer ? Color.BLUE : Color.RED); // fix this later?
-
-        firstCell.addMouseListener(new MouseListener() {
+        JPanel tile = new JPanel();
+        tile.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+        tile.setPreferredSize(new Dimension(25, 25));
+        tile.setBackground(Color.BLUE);
+        this.setShipListener = new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
 
-                firstPoint = firstCell.getLocation();
+                firstPoint = tile.getLocation();
                 double xPos = (firstPoint.getX() / 25 + 1);
                 int x = (int) xPos;
                 double yPos = (firstPoint.getY() / 25 + 1);
@@ -81,30 +78,24 @@ public class GridBuilder extends Grid {
                 secondNextPoint = new Point((int) (firstPoint.getX() + 25), (int) (firstPoint.getY()));
                 thirdNextPoint = new Point((int) (firstPoint.getX() + 50), (int) (firstPoint.getY()));
 
-
                 ArrayList<Coordinate> coordinates = new ArrayList<>();
-                coordinates.add(new Coordinate(x, y));
-                coordinates.add(new Coordinate(x2, y2));
-                coordinates.add(new Coordinate(x3, y3));
+                coordinates.add(gameController.getPlayer().getCord(x, y));
+                coordinates.add(gameController.getPlayer().getCord(x2, y2));
+                coordinates.add(gameController.getPlayer().getCord(x3, y3));
 
                 getComp2(secondNextPoint);
                 getComp3(thirdNextPoint);
+                getComp2(secondNextPoint);
 
-                firstCell.setBackground(Color.yellow);
-                secondNextCell.setBackground(Color.yellow);
-                thirdNextCell.setBackground(Color.yellow);
+//              //fixme get ship type from drop down menu before
+                gameController.getPlayer().addShip(coordinates, gameController.getGui().currentShipType); // Create new ship object
 
-
-//                //fixme pls
-                if (isPlayer) {
-                    gameController.getPlayer().addShip(coordinates, Ship.ShipType.Submarine); // Create new ship object
-//                    draw();
+                // should color after
+                if (gameController.getPlayer().getCord(x, y).isPartOfShip && gameController.getPlayer().getCord(x2, y2).isPartOfShip && gameController.getPlayer().getCord(x3, y3).isPartOfShip) {
+                    tile.setBackground(Color.yellow);
+                    secondNextCell.setBackground(Color.yellow);
+                    thirdNextCell.setBackground(Color.yellow);
                 }
-//                else { // do i even need this
-//                    gameController.getPlayer2Data().addShip(coordinates); // Create new ship object
-//                    draw();
-//                }
-
             }
 
             @Override
@@ -126,48 +117,8 @@ public class GridBuilder extends Grid {
             public void mouseExited(MouseEvent e) {
 
             }
-        });
-        return firstCell;
+        };
+        tile.addMouseListener(setShipListener);
+        return tile;
     }
-
-    public void draw() {
-
-
-        int[][] temp = null;
-        if (isPlayer) {
-            temp = gameController.getPlayer().getSelfData();
-        } else {
-            temp = gameController.getPlayer2Data().getSelfData();
-        }
-
-        for (int i = 0; i < 11; i++) {
-            for (int j = 0; j < 11; j++) {
-                if (temp[i][j] == 1) {
-                    int x = numberToPanel(i);
-                    int y = numberToPanel(j);
-
-                    Point p = new Point(x, y);
-                    getJpanel(p);
-                    thePanel.setBackground(Color.CYAN);
-                }
-                if (temp[i][j] == 0) {
-                    int x = numberToPanel(i);
-                    int y = numberToPanel(j);
-                    System.out.println("\ninside black " + x + "      " + y);
-
-                    Point p = new Point(Math.abs(x), Math.abs(y));
-                    getJpanel(p);
-
-                    thePanel.setBackground(Color.BLACK);
-
-                }
-            }
-        }
-    }
-
-    public int numberToPanel(int s) {
-        int temp = (s - 1) * 20;
-        return temp;
-    }
-
 }

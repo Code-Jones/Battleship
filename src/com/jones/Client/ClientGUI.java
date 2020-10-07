@@ -4,7 +4,8 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 import com.jones.Board.GridBuilder;
-import com.jones.ProblemDoimain.Message;
+import com.jones.ProblemDomain.Message;
+import com.jones.ProblemDomain.Ship;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -12,7 +13,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.net.Socket;
-
+import java.util.ArrayList;
 
 public class ClientGUI {
     private final JFrame frame;
@@ -25,14 +26,16 @@ public class ClientGUI {
     JList<Message> chatList;
     MouseListener playModeListener;
     MouseListener setShipsListener;
-    Component[] opponentTiles;
-    Component[] playerTiles;
     boolean isHorizontal;
     JPanel playerBoard;
     JPanel opponentBoard;
     MouseListener setPointerListener;
     GameController gameController;
+    public Ship.ShipType currentShipType;
+    public ActionListener comboBoxLister;
+    JComboBox<String> comboBox;
 
+    //constructor
     public ClientGUI(String title, GameController gameController) {
 
         //networks stuff
@@ -55,6 +58,7 @@ public class ClientGUI {
         this.frame.setSize(900, 500);
 
         //temp
+        this.currentShipType = Ship.ShipType.Battleship;
         this.gameController = gameController;
         this.isHorizontal = true;
         setListeners();
@@ -84,42 +88,29 @@ public class ClientGUI {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 e.getComponent().setBackground(Color.YELLOW);
-
-
-//                if (isHorizontal) {
-//                    for (int i = x; i < (x + 5) ; i++) {
-//                        e.getComponent().setBackground(Color.RED);
-//                    }
-//                }
             }
         };
 
-        this.setPointerListener = new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                System.out.println(e.getPoint().toString());
-            }
-        };
-
-        this.setShipsListener = new MouseAdapter() {
+       this.setShipsListener = new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 e.getComponent().setBackground(Color.YELLOW);
-//                String[] cord = e.getSource().toString().split(" ");
-//                int x = Integer.parseInt(cord[0]);
-//                int y = Integer.parseInt(cord[1]);
-//
-//
-//                System.out.println("x: " + x + " y: " + y);
+                String[] cord = e.getSource().toString().split(" ");
+                int x = Integer.parseInt(cord[0]);
+                int y = Integer.parseInt(cord[1]);
 
-//                addToSetShipList(x, y);
+
+                System.out.println("x: " + x + " y: " + y);
             }
         };
 
-    }
+//       this.comboBoxLister = e -> {
+//
+//       }
 
+
+    }
 
     private void buildGUI() {
         JPanel mainPanel = new JPanel();
@@ -146,7 +137,7 @@ public class ClientGUI {
         panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(2, 2, 20, 0), null, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
         JLabel placeLabel = new JLabel();
         placeLabel.setFont(new Font("Source Code Pro", -1, 16));
-        placeLabel.setHorizontalAlignment(0);
+        placeLabel.setHorizontalAlignment(SwingConstants.CENTER);
         placeLabel.setText("Ship Ledger");
         panel.add(placeLabel, BorderLayout.NORTH);
         JButton setButton = new JButton();
@@ -155,15 +146,30 @@ public class ClientGUI {
         final JPanel panel4 = new JPanel();
         panel4.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
         panel.add(panel4, BorderLayout.CENTER);
-        JComboBox<String> comboBox1 = new JComboBox<>();
-        final DefaultComboBoxModel<String> defaultComboBoxModel1 = new DefaultComboBoxModel<>();
+
+        
+        comboBox = new JComboBox<>();
+        final DefaultComboBoxModel<String> defaultComboBoxModel1;
+        defaultComboBoxModel1 = new DefaultComboBoxModel<>();
         defaultComboBoxModel1.addElement("Battleship");
         defaultComboBoxModel1.addElement("AirCraft");
         defaultComboBoxModel1.addElement("Cruiser");
         defaultComboBoxModel1.addElement("Submarine");
         defaultComboBoxModel1.addElement("Destroyer");
-        comboBox1.setModel(defaultComboBoxModel1);
-        panel4.add(comboBox1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        comboBox.setModel(defaultComboBoxModel1);
+        panel4.add(comboBox, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        comboBox.addActionListener(e -> {
+            String str = String.valueOf(comboBox.getSelectedItem());
+            System.out.println(comboBox.getItemCount());
+            if (gameController.getPlayer().fleet.size() != 5) {
+                this.currentShipType = Ship.ShipType.valueOf(str);
+                System.out.println(this.currentShipType);
+            } else {
+                comboBox.setEnabled(false);
+                panel.setVisible(false);
+            }
+        });
+
         final Spacer spacer1 = new Spacer();
         panel4.add(spacer1, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         return panel;
@@ -182,20 +188,21 @@ public class ClientGUI {
         playerBoard = new GridBuilder(gameController, true);
         opponentBoard = new GridBuilder(gameController, false); // fix to enemiesGrid
 
-        playerBoard.addMouseListener(setShipsListener);
-//        opponentBoard.addMouseListener(setPointerListener);
-
-//        playerBoard.addMouseListener();
-        playerTiles = playerBoard.getComponents();
-        for (Component playerTile : playerTiles) {
-            playerTile.addMouseListener(setPointerListener);
+        // I FUCKING HATE SWING
+        JPanel p = (JPanel) opponentBoard.getComponent(0);
+        Component[] ss = p.getComponents();
+        ArrayList<JPanel> test = new ArrayList<>();
+        for (Component s : ss) {
+            test.add((JPanel) s);
+        }
+        for (JPanel tile : test) {
+            for (MouseListener al : tile.getMouseListeners()) {
+                tile.removeMouseListener(al);
+            }
+            tile.setEnabled(false);
+            tile.setBackground(Color.red);
         }
 
-//        opponentTiles = opponentBoard.getComponents();
-//        for (Component opponentTile : opponentTiles) {
-//            opponentTile.setEnabled(false);
-//                opponentTile.addMouseListener(playModeListener);
-//        }
 
         panel.add(emptyNorthPanel, BorderLayout.NORTH);
         panel.add(emptySouthPanel, BorderLayout.SOUTH);
@@ -239,18 +246,6 @@ public class ClientGUI {
         this.chatListModel.addElement(message);
     }
 
-
-    // player stuff
-
-
-    public void sendCoordinates() {
-
-    }
-
-    public void sendPlayBoard() {
-
-    }
-
     // server stuff
     public void sendMessage(Message message) {
         try {
@@ -259,6 +254,14 @@ public class ClientGUI {
         } catch (IOException e) {
             e.printStackTrace();
             this.addClientMessage(new Message(this.username, "Message could not send"));
+        }
+    }
+
+    public void sendShip(Ship ship) {
+        try {
+            this.outputStream.writeObject(ship);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -272,7 +275,7 @@ public class ClientGUI {
             InputStream inStream = socket.getInputStream();
             inputStream = new ObjectInputStream(inStream);
 
-            ServerHandler serverHandler = new ServerHandler(this, socket, inputStream, outputStream);
+            ServerHandler serverHandler = new ServerHandler(this, socket, inputStream);
             Thread thread = new Thread(serverHandler);
 
             thread.start();
@@ -282,4 +285,12 @@ public class ClientGUI {
         }
     }
 
+    public void removeBoatFromComboBox(Ship.ShipType shipType) {
+        for (int i = 0; i < comboBox.getItemCount(); i++) {
+            if (comboBox.getItemAt(i).equals(String.valueOf(shipType))) {
+                System.out.println(comboBox.getItemAt(i) + " removed");
+                comboBox.removeItem(comboBox.getItemAt(i));
+            }
+        }
+    }
 }

@@ -1,28 +1,39 @@
-package com.jones.ProblemDoimain;
+package com.jones.ProblemDomain;
 
 import com.jones.Board.Coordinate;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Ship {
+public class Ship implements Serializable {
     ArrayList<Coordinate> coordinates;
     public enum ShipType {
         Battleship,
         Cruiser,
-        Aircraft,
+        AirCraft,
         Destroyer,
         Submarine
     }
+
+    @Override
+    public String toString() {
+        return "Ship{" +
+                "coordinates=" + coordinates +
+                ", shipType=" + shipType +
+                '}';
+    }
+
     ShipType shipType;
 
     public Ship(ArrayList<Coordinate> coordinates, ShipType shipType) {
+
         this.coordinates = coordinates;
         this.shipType = shipType;
     }
 
     public void setShipCoordinates(ArrayList<Coordinate> coordinates, String shipType) {
         for (Coordinate coordinate : coordinates) {
-            coordinate.setPartOfShip(true);
+            coordinate.setPartOfShip(true, ShipType.valueOf(shipType));
             ShipType.valueOf(shipType);
         }
     }

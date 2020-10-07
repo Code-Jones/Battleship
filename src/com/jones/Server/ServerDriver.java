@@ -1,7 +1,7 @@
 package com.jones.Server;
 
-import com.jones.ProblemDoimain.ClientConnection;
-import com.jones.ProblemDoimain.Message;
+import com.jones.ProblemDomain.ClientConnection;
+import com.jones.ProblemDomain.Message;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -10,17 +10,6 @@ import java.util.ArrayList;
 
 
 public class ServerDriver {
-//    TODO main shortlist
-//      - make game boards
-//      - make placing function
-//      - make cord class
-//      - send players move
-//      - set boards
-//      - make win conditions
-//      - improve ui
-//      - make profile class to transfer identity
-//      - make sure i've followed rules
-//      - make jar files
 
     public static void main(String[] args) throws IOException {
         ServerGUI gui = new ServerGUI();
@@ -38,9 +27,6 @@ public class ServerDriver {
 
                 OutputStream outputStream = client.getOutputStream();
                 ObjectOutputStream objectOutput = new ObjectOutputStream(outputStream);
-
-//                ObjectInputStream objectInput = new ObjectInputStream(new ObjectInputStream(client.getInputStream()));
-//                ObjectOutputStream objectOutput = new ObjectOutputStream(new ObjectOutputStream(client.getOutputStream()));
 
                 ClientConnection connection = new ClientConnection(client, objectInput, objectOutput);
                 workerList.add(connection);
@@ -68,10 +54,6 @@ public class ServerDriver {
         listener.close();
     }
 
-//        public ArrayList<ServerWorker> getWorkerList () {
-//            return workerList;
-//        }
-//
 //        public void removeWorker (ServerWorker serverWorker){
 //            this.workerList.remove(serverWorker);
 //        }

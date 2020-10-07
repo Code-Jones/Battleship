@@ -1,12 +1,39 @@
 package com.jones.Board;
 
-import java.util.ArrayList;
+import com.jones.ProblemDomain.Ship;
 
-public class Coordinate {
+import java.io.Serializable;
+
+public class Coordinate implements Serializable {
     public int x;
     public int y;
     public boolean isPartOfShip;
     boolean hit;
+    Ship.ShipType shipType;
+
+    // for making new ships // i don't use this
+//    public Coordinate(int x, int y, boolean isPartOfShip) {
+//        this.x = x;
+//        this.y = y;
+//        this.isPartOfShip = true;
+//    }
+
+    // for making default coordinates
+    public Coordinate(int x, int y) {
+        this.x = x;
+        this.y = y;
+        this.hit = false;
+        this.isPartOfShip = false;
+        this.shipType = null;
+    }
+    // for populating game board
+    public Coordinate(int x, int y, Ship.ShipType shipType) {
+        this.x = x;
+        this.y = y;
+        this.hit = false;
+        this.isPartOfShip = false;
+        this.shipType = shipType;
+    }
 
     @Override
     public String toString() {
@@ -18,21 +45,6 @@ public class Coordinate {
                 '}';
     }
 
-    // for making new ships
-    public Coordinate(int x, int y, boolean isPartOfShip) {
-        this.x = x;
-        this.y = y;
-        this.isPartOfShip = true;
-    }
-
-    // for making default coordinates
-    public Coordinate(int x, int y) {
-        this.x = x;
-        this.y = y;
-        this.hit = false;
-        this.isPartOfShip = false;
-    }
-
     public boolean isCoordinate(Coordinate coordinate) {
         return coordinate.getX() == this.x && coordinate.getY() == this.y;
     }
@@ -42,16 +54,8 @@ public class Coordinate {
         return x;
     }
 
-    public void setX(int x) {
-        this.x = x;
-    }
-
     public int getY() {
         return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
     }
 
     public boolean isHit() {
@@ -66,8 +70,9 @@ public class Coordinate {
         return isPartOfShip;
     }
 
-    public void setPartOfShip(boolean partOfShip) {
+    public void setPartOfShip(boolean partOfShip, Ship.ShipType shipType) {
         isPartOfShip = partOfShip;
+        this.shipType = shipType;
     }
 
     public boolean isEdge(Coordinate coordinate) {

@@ -1,6 +1,6 @@
 package com.jones.Server;
 
-import com.jones.ProblemDoimain.Message;
+import com.jones.ProblemDomain.Message;
 
 import javax.swing.*;
 import java.awt.*;

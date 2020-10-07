@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.jones.ProblemDoimain;
+package com.jones.ProblemDomain;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;

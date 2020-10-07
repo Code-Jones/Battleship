@@ -1,7 +1,7 @@
 package com.jones.Server;
 
 
-import com.jones.ProblemDoimain.ClientConnection;
+import com.jones.ProblemDomain.ClientConnection;
 
 public class ClientHandler implements Runnable {
 	private final ClientConnection connection1;

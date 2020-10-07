@@ -1,6 +1,6 @@
 package com.jones.Client;
 
-import com.jones.ProblemDoimain.Message;
+import com.jones.ProblemDomain.Message;
 
 import java.io.*;
 import java.net.Socket;
