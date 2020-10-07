@@ -2,6 +2,8 @@ package ProblemDomain;
 
 import Client.GameController;
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 
 /**
@@ -180,9 +182,24 @@ public class Player {
 
             }
         }
-        // todo for testing
+        // for testing
         System.out.println(fleet.get(0).toString());
     }
 
+    public JPanel getPanelFromCord(int x, int y) {
+        // for player
+        return (JPanel) this.gameController.getGui().getPanelFromCord(x, y).getComponentAt(x, y);
+    }
 
+
+    public void sendMissile(Coordinate cord) {
+        for (Coordinate coordinate : globalGrid) {
+            if (coordinate.getX() == cord.getX() && coordinate.getY() == cord.getY()) {
+                System.out.println("test : found cord");
+                System.out.println(coordinate.isPartOfShip());
+                coordinate.setHit(true);
+                getPanelFromCord(coordinate.x, coordinate.y).setBackground(Color.red);
+            }
+        }
+    }
 }

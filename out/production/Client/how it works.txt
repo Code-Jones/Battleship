@@ -34,11 +34,9 @@ GamePlay {
 
 
 // todo current issue
-    -> start game
-        -> playing state
-            -> make hit listener
-                -> missile class?
-            -> send players move
+    -> start game done
+        -> playing state done
+            -> make hit listener done
             -> send that to server
             -> update board with hit
             -> check if ship sunk or win

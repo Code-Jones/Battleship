@@ -50,6 +50,18 @@ public class Ship implements Serializable {
                 '}';
     }
 
+    public void setCoordinates(ArrayList<Coordinate> coordinates) {
+        this.coordinates = coordinates;
+    }
+
+    public ShipType getShipType() {
+        return shipType;
+    }
+
+    public void setShipType(ShipType shipType) {
+        this.shipType = shipType;
+    }
+
     public boolean isShipHit(Coordinate hit) {
         for (Coordinate coordinate : this.coordinates) {
             if (coordinate.isCoordinate(hit)) {
@@ -84,17 +96,5 @@ public class Ship implements Serializable {
 
     public ArrayList<Coordinate> getCoordinates() {
         return coordinates;
-    }
-
-    public void setCoordinates(ArrayList<Coordinate> coordinates) {
-        this.coordinates = coordinates;
-    }
-
-    public ShipType getShipType() {
-        return shipType;
-    }
-
-    public void setShipType(ShipType shipType) {
-        this.shipType = shipType;
     }
 }

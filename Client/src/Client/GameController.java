@@ -74,7 +74,7 @@ public class GameController {
         return gui;
     }
 
-    public Player getPlayer2Data() {
-        return opponent;
+    public Player getOpponent() {
+        return this.opponent;
     }
 }

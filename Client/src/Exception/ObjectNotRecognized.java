@@ -6,7 +6,7 @@ package Exception;
  * @version 1
  *
  * Exception is object isn't recognized
- * nothing special.
+ * nothing special. Just looking for the extra mark here nick
  */
 public class ObjectNotRecognized extends Exception {
 

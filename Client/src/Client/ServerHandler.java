@@ -1,5 +1,6 @@
 package Client;
 
+import ProblemDomain.Coordinate;
 import ProblemDomain.Message;
 import ProblemDomain.Ship;
 import Exception.ObjectNotRecognized;
@@ -48,6 +49,10 @@ public class ServerHandler implements Runnable {
 				} else if (object instanceof Ship) {
 					Ship ship = (Ship) object;
 					this.gui.gameController.opponent.addToFleet(ship);
+					System.out.println(this.gui.gameController.opponent.fleet.size());
+				} else if (object instanceof Coordinate) {
+					Coordinate cord = (Coordinate) object;
+					this.gui.gameController.player.sendMissile(cord);
 					System.out.println(this.gui.gameController.opponent.fleet.size());
 				} else {
 					throw new ObjectNotRecognized("Received Object not recognized");

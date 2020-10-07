@@ -1,6 +1,7 @@
 package Client;
 
 import Board.GridBuilder;
+import ProblemDomain.Coordinate;
 import ProblemDomain.Message;
 import ProblemDomain.Ship;
 import com.intellij.uiDesigner.core.GridConstraints;
@@ -70,52 +71,10 @@ public class ClientGUI {
         this.currentShipType = Ship.ShipType.Battleship;
         this.gameController = gameController;
         this.isHorizontal = true;
-//        setListeners(); // not sure if needed currently
         buildGUI();
         connectToServer();
     }
-
     // gui stuff
-//    private void setListeners() {
-//        // all the listeners for the game
-//        this.playModeListener = new MouseAdapter() {
-//            @Override
-//            public void mouseEntered(MouseEvent e) {
-//                super.mouseEntered(e);
-//                if (e.getComponent().getBackground() != Color.YELLOW)
-//                    e.getComponent().setBackground(Color.RED);
-//            }
-//
-//            @Override
-//            public void mouseExited(MouseEvent e) {
-//                super.mouseExited(e);
-//                if (e.getComponent().getBackground() != Color.YELLOW)
-//                    e.getComponent().setBackground(Color.BLUE);
-//            }
-//
-//            @Override
-//            public void mouseClicked(MouseEvent e) {
-//                super.mouseClicked(e);
-//                e.getComponent().setBackground(Color.YELLOW);
-//            }
-//        };
-//
-//        this.setShipsListener = new MouseAdapter() {
-//            @Override
-//            public void mouseClicked(MouseEvent e) {
-//                super.mouseClicked(e);
-//                e.getComponent().setBackground(Color.YELLOW);
-//                String[] cord = e.getSource().toString().split(" ");
-//                int x = Integer.parseInt(cord[0]);
-//                int y = Integer.parseInt(cord[1]);
-//
-//
-//                System.out.println("x: " + x + " y: " + y);
-//            }
-//        };
-//
-//
-//    }
 
     /**
      * Calls the rest of the panels to be built individually
@@ -148,9 +107,6 @@ public class ClientGUI {
         placeLabel.setHorizontalAlignment(SwingConstants.CENTER);
         placeLabel.setText("Ship Ledger");
         panel.add(placeLabel, BorderLayout.NORTH);
-        JButton setButton = new JButton();
-        setButton.setText("Set");
-        panel.add(setButton, BorderLayout.SOUTH);
         final JPanel panel4 = new JPanel();
         panel4.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
 
@@ -258,6 +214,10 @@ public class ClientGUI {
         }
     }
 
+    public JPanel getPanelFromCord(int x, int y) {
+        return (JPanel) this.playerBoard.getComponentAt(x, y);
+    }
+
     // server stuff
     public void sendMessage(Message message) {
         try {
@@ -267,15 +227,6 @@ public class ClientGUI {
         } catch (IOException e) {
             e.printStackTrace();
             this.addClientMessage(new Message(this.username, "Message could not send"));
-        }
-    }
-
-    public void sendShip(Ship ship) {
-        try {
-            this.outputStream.writeObject(ship);
-            this.outputStream.flush(); // <- added this
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
@@ -300,6 +251,22 @@ public class ClientGUI {
         } catch (IOException e) {
             e.printStackTrace();
             this.addClientMessage(new Message(this.username, "Unable to connect"));
+        }
+    }
+
+    public void sendShip(Ship ship) {
+        try {
+            this.outputStream.writeObject(ship);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void sendCord(Coordinate cord) {
+        try {
+            this.outputStream.writeObject(cord);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

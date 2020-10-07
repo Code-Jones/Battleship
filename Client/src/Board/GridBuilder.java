@@ -92,7 +92,6 @@ public class GridBuilder extends Grid {
 
                     getComp2(secondNextPoint);
                     getComp3(thirdNextPoint);
-                    getComp2(secondNextPoint);
 
 //              //fixme get ship type from drop down menu before
                     gameController.getPlayer().addShip(coordinates, gameController.getGui().currentShipType); // Create new ship object
@@ -136,7 +135,24 @@ public class GridBuilder extends Grid {
             public void mouseClicked(MouseEvent e) {
                 System.out.println(gameController.getGameState());
                 if (gameController.getGameState().equals(GameController.GameState.PLAYING)) {
-                    System.out.println("in this, should test");
+                    Point point = tile.getLocation();
+                    int x = (int) (point.getX() / 25 + 1);
+                    int y = (int) (point.getY() / 25 + 1);
+
+                    // not working but is....
+                    JPanel cell = getComponentAt(point);
+                    Coordinate cord = gameController.getOpponent().getCord(x, y);
+
+                    if (cord.isPartOfShip() && !cord.isHit()) {
+                        System.out.println(cord.toString() + " is a hit");
+                        gameController.getOpponent().getCord(x, y).setHit(true);
+                        cell.setBackground(Color.yellow);
+                        gameController.getGui().sendCord(gameController.getOpponent().getCord(x, y));
+                    } else {
+                        System.out.println(cord.toString() + " is a miss");
+                        cell.setBackground(Color.GRAY);
+                    }
+
                 } else {
                     tile.setEnabled(false);
                 }

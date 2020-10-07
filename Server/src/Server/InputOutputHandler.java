@@ -2,6 +2,7 @@ package Server;
 
 import Gui.ServerGUI;
 import ProblemDomain.ClientConnection;
+import ProblemDomain.Coordinate;
 import ProblemDomain.Message;
 import ProblemDomain.Ship;
 
@@ -39,27 +40,28 @@ public class InputOutputHandler implements Runnable {
                     if (message.getUsername().equals("Admin") && message.getMessage().equals("is my turn?")) {
                         if (turn) {
                             turn = false;
+                            // make it this way. not like = writeObject(new Message("Admin", "false"));
+                            // or it will cause issues you don't want
                             Message temp = new Message("Admin", "false");
                             this.output.getObjectOutput().writeObject(temp);
-//                            this.output.getObjectOutput().writeObject(new Message("Admin", "false"));
-//                            this.output.getObjectOutput().flush(); // <- added this
                         } else {
                             turn = true;
                             Message temp = new Message("Admin", "true");
                             this.output.getObjectOutput().writeObject(temp);
-//                            this.output.getObjectOutput().writeObject(new Message("Admin", "true"));
-//                            this.output.getObjectOutput().flush(); // <- added this
                         }
                     }
                     ServerGUI.addServerMessage(message);
                     this.output.getObjectOutput().writeObject(message);
-//                    this.output.getObjectOutput().flush(); // <- added this
                 } else if (object instanceof Ship) {
                     System.out.println("ship here");
 					Ship ship = (Ship) object;
 					ServerGUI.addServerMessage(new Message("test", "Received ship" + ship.getShipType()));
 					this.output.getObjectOutput().writeObject(ship);
-//                    this.output.getObjectOutput().flush(); // <- added this
+                } else if (object instanceof Coordinate) {
+                    System.out.println("cord here");
+                    Coordinate cord = (Coordinate) object;
+                    ServerGUI.addServerMessage(new Message("Sent Missile", cord.x + " " + cord.y));
+                    this.output.getObjectOutput().writeObject(cord);
                 }
             } catch (IOException | ClassNotFoundException e) {
                 System.out.println("sent something, not message");
