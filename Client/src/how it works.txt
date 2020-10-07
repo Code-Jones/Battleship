@@ -1,0 +1,52 @@
+Setup {
+Main in GameController ->
+- new GameController
+- new ClientGUI("title", gameController)
+GUI ->
+- sets basic Frame settings / server settings
+- starts setListeners();
+    -> new listeners
+- starts buildGUI();
+    -> builds all gui panels in their own methods
+        -> new GridBuilders(gameController, 'isPlayer' true)
+            -> Calls super() / extends Grid
+                -> makes grid of JPanels with Parents getCell() method
+            - assigns mouseListener to each cell
+                -> finds pointer location of cell and the next 2 beside it
+                // todo add this to find the setting of which ship it's placing
+                // todo because currently it's making ships of 3 rn / on x axis
+            - adds ship to player [ gameController.getPlayer().addShip(coordinates) ]
+                -> in Player.addShip(ArrayList<Coordinate> coordinates)
+                    - checks for edge or not
+                    - checks if space is taken by another ship
+                    - checks if < 5 ships
+                    - adds to fleet (ArrayList<Ship> fleet)
+
+- starts ConnectToServer();
+    -> sets up connection to server
+}
+
+
+// todo current issue
+    -> Add readme / java docs
+    -> Exceptions handled properly
+    -> add gameState
+    -> start game
+        -> playing state
+            -> disable or remove west side gui
+            -> make hit listener
+                -> missile class?
+            -> send players move
+            -> send that to server
+            -> update board with hit
+            -> check if ship sunk or win
+            -> change state
+        -> make win conditions
+    -> make sure i've followed rules
+    -> make jar file
+
+//todo extra
+    -> set up for more than one ship
+    -> make it for vertical ships
+    -> handle disconnecting errors
+
