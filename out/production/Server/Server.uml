@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="813.5" y="216.0">Gui.ServerGUI</node>
+    <node x="687.0424783549784" y="0.0">ProblemDomain.Message</node>
+    <node x="306.3590367965368" y="656.0">Server.ClientHandler</node>
+    <node x="10.5" y="249.5">ProblemDomain.ClientConnection</node>
+    <node x="523.4007034632034" y="485.0">Server.InputOutputHandler</node>
+    <node x="0.0" y="945.0">ProblemDomain.Coordinate</node>
+    <node x="290.77462121212113" y="847.0">Server.ServerDriver</node>
+    <node x="437.5" y="194.0">ProblemDomain.Ship</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="Server.ClientHandler" target="Server.InputOutputHandler">
+      <point x="40.0" y="-60.5" />
+      <point x="506.3590367965368" y="626.0" />
+      <point x="611.6507034632034" y="626.0" />
+      <point x="-88.25" y="60.5" />
+    </edge>
+    <edge source="Server.ServerDriver" target="ProblemDomain.Message">
+      <point x="-64.28571428571433" y="-26.5" />
+      <point x="301.4889069264068" y="827.0" />
+      <point x="0.0" y="827.0" />
+      <point x="0.0" y="174.0" />
+      <point x="708.9174783549784" y="174.0" />
+      <point x="-65.625" y="72.0" />
+    </edge>
+    <edge source="Server.InputOutputHandler" target="ProblemDomain.ClientConnection">
+      <point x="-147.08333333333343" y="-60.5" />
+      <point x="552.81737012987" y="465.0" />
+      <point x="315.75" y="465.0" />
+      <point x="101.75" y="60.0" />
+    </edge>
+    <edge source="Server.ClientHandler" target="ProblemDomain.ClientConnection">
+      <point x="-40.0" y="-60.5" />
+      <point x="426.3590367965368" y="626.0" />
+      <point x="219.5" y="626.0" />
+      <point x="219.5" y="465.0" />
+      <point x="247.91666666666663" y="465.0" />
+      <point x="33.91666666666663" y="60.0" />
+    </edge>
+    <edge source="Server.InputOutputHandler" target="ProblemDomain.Message">
+      <point x="88.25" y="-60.5" />
+      <point x="788.1507034632034" y="465.0" />
+      <point x="803.0" y="465.0" />
+      <point x="803.0" y="164.0" />
+      <point x="796.4174783549784" y="164.0" />
+      <point x="21.875" y="72.0" />
+    </edge>
+    <edge source="Server.InputOutputHandler" target="Gui.ServerGUI">
+      <point x="147.08333333333337" y="-60.5" />
+      <point x="846.9840367965369" y="465.0" />
+      <point x="853.6666666666667" y="465.0" />
+      <point x="-80.33333333333333" y="93.5" />
+    </edge>
+    <edge source="Server.ServerDriver" target="Server.ClientHandler">
+      <point x="0.0" y="-26.5" />
+      <point x="365.77462121212113" y="797.0" />
+      <point x="386.3590367965368" y="797.0" />
+      <point x="-80.0" y="60.5" />
+    </edge>
+    <edge source="Server.ServerDriver" target="Gui.ServerGUI">
+      <point x="42.85714285714289" y="-26.5" />
+      <point x="408.631764069264" y="817.0" />
+      <point x="967.8173701298701" y="817.0" />
+      <point x="967.8173701298701" y="465.0" />
+      <point x="934.0" y="465.0" />
+      <point x="0.0" y="93.5" />
+    </edge>
+    <edge source="Server.ServerDriver" target="ProblemDomain.ClientConnection">
+      <point x="-42.85714285714289" y="-26.5" />
+      <point x="322.91747835497824" y="817.0" />
+      <point x="145.31628787878776" y="817.0" />
+      <point x="145.31628787878776" y="465.0" />
+      <point x="44.41666666666663" y="465.0" />
+      <point x="-169.58333333333337" y="60.0" />
+    </edge>
+    <edge source="Gui.ServerGUI" target="ProblemDomain.Message">
+      <point x="0.0" y="-93.5" />
+      <point x="934.0" y="174.0" />
+      <point x="840.1674783549784" y="174.0" />
+      <point x="65.625" y="72.0" />
+    </edge>
+    <edge source="Server.InputOutputHandler" target="ProblemDomain.Ship">
+      <point x="-29.41666666666663" y="-60.5" />
+      <point x="670.4840367965369" y="445.0" />
+      <point x="609.5" y="445.0" />
+      <point x="0.0" y="115.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="527.5" y="610.5" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Constructors</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
