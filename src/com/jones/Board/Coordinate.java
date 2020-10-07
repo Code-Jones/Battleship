@@ -1,22 +1,12 @@
 package com.jones.Board;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 
-public class Coordinate {
+public class Coordinate implements Serializable {
     public int x;
     public int y;
     public boolean isPartOfShip;
     boolean hit;
-
-    @Override
-    public String toString() {
-        return "Coordinate{" +
-                "x =" + x +
-                ", y= " + y +
-                ", isPartOfShip= " + isPartOfShip +
-                ", hit= " + hit +
-                '}';
-    }
 
     // for making new ships
     public Coordinate(int x, int y, boolean isPartOfShip) {
@@ -33,6 +23,16 @@ public class Coordinate {
         this.isPartOfShip = false;
     }
 
+    @Override
+    public String toString() {
+        return "Coordinate{" +
+                "x =" + x +
+                ", y= " + y +
+                ", isPartOfShip= " + isPartOfShip +
+                ", hit= " + hit +
+                '}';
+    }
+
     public boolean isCoordinate(Coordinate coordinate) {
         return coordinate.getX() == this.x && coordinate.getY() == this.y;
     }
@@ -42,16 +42,8 @@ public class Coordinate {
         return x;
     }
 
-    public void setX(int x) {
-        this.x = x;
-    }
-
     public int getY() {
         return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
     }
 
     public boolean isHit() {

@@ -1,7 +1,7 @@
 package com.jones.Client;
 
 import com.jones.Board.Coordinate;
-import com.jones.ProblemDoimain.Player;
+import com.jones.ProblemDomain.Player;
 
 import java.util.ArrayList;
 

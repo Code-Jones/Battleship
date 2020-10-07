@@ -4,8 +4,8 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 import com.jones.Board.GridBuilder;
-import com.jones.ProblemDoimain.Message;
-import com.jones.ProblemDoimain.Ship;
+import com.jones.ProblemDomain.Message;
+import com.jones.ProblemDomain.Ship;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;

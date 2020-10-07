@@ -1,4 +1,4 @@
-package com.jones.ProblemDoimain;
+package com.jones.ProblemDomain;
 
 import com.jones.Board.Coordinate;
 import com.jones.Client.GameController;
@@ -9,7 +9,7 @@ import java.util.Arrays;
 public class Player {
     public boolean isPlayer;
     public int numOfShipsSunk = 0;
-    private ArrayList<Ship> fleet = new ArrayList<>();
+    public ArrayList<Ship> fleet = new ArrayList<>();
     public ArrayList<Coordinate> globalGrid;
     public GameController gameController;
 
@@ -24,6 +24,7 @@ public class Player {
         }
     }
 
+    // important method
     public void addShip(ArrayList<Coordinate> coordinates, Ship.ShipType type) {
         boolean goodToGo = true;
 
@@ -69,7 +70,7 @@ public class Player {
     public void sendFleetToServer(ArrayList<Ship> fleet) {
         for (Ship ship : fleet) {
             gameController.getGui().sendShip(ship);
-            System.out.println("\n\n" + Arrays.toString(ship.coordinates.toArray()));
+            System.out.println("\n" + Arrays.toString(ship.coordinates.toArray()));
         }
     }
 
@@ -103,4 +104,10 @@ public class Player {
         }
     }
 
+    public void addToFleet(Ship ship) {
+        fleet.add(ship);
+        if (fleet.size() == 5) {
+
+        }
+    }
 }

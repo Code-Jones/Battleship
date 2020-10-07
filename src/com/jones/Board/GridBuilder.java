@@ -1,7 +1,7 @@
 package com.jones.Board;
 
 import com.jones.Client.GameController;
-import com.jones.ProblemDoimain.Ship;
+import com.jones.ProblemDomain.Ship;
 
 import javax.swing.*;
 import java.awt.*;

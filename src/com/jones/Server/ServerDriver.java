@@ -1,7 +1,7 @@
 package com.jones.Server;
 
-import com.jones.ProblemDoimain.ClientConnection;
-import com.jones.ProblemDoimain.Message;
+import com.jones.ProblemDomain.ClientConnection;
+import com.jones.ProblemDomain.Message;
 
 import java.io.*;
 import java.net.ServerSocket;

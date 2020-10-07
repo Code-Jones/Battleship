@@ -1,4 +1,4 @@
-package com.jones.ProblemDoimain;
+package com.jones.ProblemDomain;
 
 import com.jones.Board.Coordinate;
 
@@ -14,6 +14,15 @@ public class Ship implements Serializable {
         Destroyer,
         Submarine
     }
+
+    @Override
+    public String toString() {
+        return "Ship{" +
+                "coordinates=" + coordinates +
+                ", shipType=" + shipType +
+                '}';
+    }
+
     ShipType shipType;
 
     public Ship(ArrayList<Coordinate> coordinates, ShipType shipType) {
