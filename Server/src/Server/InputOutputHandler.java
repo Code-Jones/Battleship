@@ -39,11 +39,15 @@ public class InputOutputHandler implements Runnable {
                     if (message.getUsername().equals("Admin") && message.getMessage().equals("is my turn?")) {
                         if (turn) {
                             turn = false;
-                            this.output.getObjectOutput().writeObject(new Message("Admin", "false"));
+                            Message temp = new Message("Admin", "false");
+                            this.output.getObjectOutput().writeObject(temp);
+//                            this.output.getObjectOutput().writeObject(new Message("Admin", "false"));
 //                            this.output.getObjectOutput().flush(); // <- added this
                         } else {
                             turn = true;
-                            this.output.getObjectOutput().writeObject(new Message("Admin", "true"));
+                            Message temp = new Message("Admin", "true");
+                            this.output.getObjectOutput().writeObject(temp);
+//                            this.output.getObjectOutput().writeObject(new Message("Admin", "true"));
 //                            this.output.getObjectOutput().flush(); // <- added this
                         }
                     }

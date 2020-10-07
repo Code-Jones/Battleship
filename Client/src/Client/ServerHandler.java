@@ -38,9 +38,11 @@ public class ServerHandler implements Runnable {
 						if (receive.getMessage().equals("true")) {
 							gui.gameController.player.isTurn = true;
 							gui.gameController.opponent.isTurn = false;
+							System.out.println("is my turn");
 						} else {
 							gui.gameController.player.isTurn = false;
 							gui.gameController.opponent.isTurn = true;
+							System.out.println("not my turn");
 						}
 					this.gui.addClientMessage(receive);
 				} else if (object instanceof Ship) {

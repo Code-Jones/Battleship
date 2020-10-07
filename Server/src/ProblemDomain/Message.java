@@ -24,16 +24,16 @@ public class Message implements Serializable {
 		this.message = message;
 	}
 
-	public String getUsername() {
-		return username;
-	}
-
 	public Date getDate() {
 		return this.date;
 	}
 	
 	public String getMessage() {
 		return this.message;
+	}
+
+	public String getUsername() {
+		return username;
 	}
 	
 	public String toString() {
