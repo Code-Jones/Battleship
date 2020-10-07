@@ -12,15 +12,17 @@ import java.awt.*;
  */
 public abstract class Grid extends JPanel {
     JPanel self;
+    public boolean isPlayer;
 
-    public Grid() {
+    public Grid(boolean isPlayer) {
+        this.isPlayer = isPlayer;
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         self = new JPanel();
         self.setLayout(new GridLayout(0, 10));
 
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
-                JPanel temp = getTile();
+                JPanel temp = getTile(this.isPlayer);
                 self.add(temp);
             }
         }
@@ -38,5 +40,5 @@ public abstract class Grid extends JPanel {
         return (JPanel) comp;
     }
 
-    protected abstract JPanel getTile();
+    protected abstract JPanel getTile(boolean isPlayer);
 }

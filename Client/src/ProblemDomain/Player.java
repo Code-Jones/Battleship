@@ -1,6 +1,5 @@
 package ProblemDomain;
 
-import Board.Coordinate;
 import Client.GameController;
 
 import java.util.ArrayList;
@@ -16,7 +15,9 @@ import java.util.ArrayList;
  */
 
 public class Player {
+
     public boolean isPlayer;
+    public boolean isTurn;
     public int numOfShipsSunk = 0;
     public ArrayList<Ship> fleet = new ArrayList<>();
     public ArrayList<Coordinate> globalGrid;
@@ -38,6 +39,9 @@ public class Player {
         }
     }
 
+    public void playerTurn() {
+
+    }
 
     /**
      * This add ship function is important to adding ships from the coordinates
@@ -104,8 +108,8 @@ public class Player {
         }
         // sends to server and starts next game state
         if (fleet.size() == 5) {
-            sendFleetToServer(fleet);
             gameController.setGameState(GameController.GameState.PLAYING);
+            sendFleetToServer(fleet);
         }
     }
     // just cleans the code a bit in main function
@@ -179,4 +183,6 @@ public class Player {
         // todo for testing
         System.out.println(fleet.get(0).toString());
     }
+
+
 }

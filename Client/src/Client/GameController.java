@@ -1,7 +1,8 @@
 package Client;
 
-import Board.Coordinate;
+import ProblemDomain.Coordinate;
 import ProblemDomain.Player;
+
 import java.util.ArrayList;
 
 /**
@@ -28,11 +29,16 @@ public class GameController {
     }
 
     public GameController() {
-
         this.globalGridPlayer = new ArrayList<>();
         this.globalGridOpponent = new ArrayList<>();
         this.player = new Player(true, globalGridPlayer, this);
         this.opponent = new Player(false, globalGridOpponent, this);
+
+        // do i need this?
+//        List<PropertyChangeListener> observers = new ArrayList<>();
+//        observers.add(player);
+//        observers.add(opponent);
+
     }
 
     public static void main(String[] args) {
@@ -56,8 +62,9 @@ public class GameController {
         System.out.println("Game state changed to : " + gameState);
     }
 
-    public void
-
+    public GameState getGameState() {
+        return currentGameState;
+    }
 
     public Player getPlayer() {
         return this.player;
@@ -70,6 +77,4 @@ public class GameController {
     public Player getPlayer2Data() {
         return opponent;
     }
-
-
 }

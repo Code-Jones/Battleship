@@ -24,6 +24,8 @@ GUI ->
                     - removes ship type option from gui
 - starts ConnectToServer();
     -> sets up connection to server
+    -> asks server if it's this players turn or not
+    -> server responds based on who asks first
 }
 
 GamePlay {
@@ -32,7 +34,6 @@ GamePlay {
 
 
 // todo current issue
-    -> add gameState
     -> start game
         -> playing state
             -> make hit listener
@@ -43,9 +44,12 @@ GamePlay {
             -> check if ship sunk or win
             -> change state
         -> make win conditions
+            -> ask if to rematch
+            -> end game and disconnect
+                -> send server disconnect message
 
 //todo extra
-    -> set up for more than one ship
+    -> set up for ship sizes
     -> make it for vertical ships
     -> handle disconnecting errors
 

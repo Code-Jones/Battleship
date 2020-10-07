@@ -21,19 +21,21 @@ GUI ->
                     - checks if space is taken by another ship
                     - checks if < 5 ships
                     - adds to fleet (ArrayList<Ship> fleet)
-
+                    - removes ship type option from gui
 - starts ConnectToServer();
     -> sets up connection to server
+    -> asks server if it's this players turn or not
+    -> server responds based on who asks first
+}
+
+GamePlay {
+
 }
 
 
 // todo current issue
-    -> Add readme / java docs
-    -> Exceptions handled properly
-    -> add gameState
     -> start game
         -> playing state
-            -> disable or remove west side gui
             -> make hit listener
                 -> missile class?
             -> send players move
@@ -42,11 +44,12 @@ GUI ->
             -> check if ship sunk or win
             -> change state
         -> make win conditions
-    -> make sure i've followed rules
-    -> make jar file
+            -> ask if to rematch
+            -> end game and disconnect
+                -> send server disconnect message
 
 //todo extra
-    -> set up for more than one ship
+    -> set up for ship sizes
     -> make it for vertical ships
     -> handle disconnecting errors
 

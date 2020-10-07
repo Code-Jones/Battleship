@@ -12,7 +12,7 @@ import java.net.Socket;
  *
  * Freshly stolen from Nick Hamnett because i didn't want to rewrite it and modified
  * Connection class that handles a client connection with the server.
- * Handles the input and output object streams and receives objects.
+ * Handles the input object streams and receives objects.
  * Puts into generic object class and checks instance of to determine actions needed.
  */
 
@@ -34,6 +34,14 @@ public class ServerHandler implements Runnable {
 				Object object = this.inputStream.readObject();
 				if (object instanceof Message) {
 					Message receive = (Message) object;
+					if (receive.getUsername().equals("Admin"))
+						if (receive.getMessage().equals("true")) {
+							gui.gameController.player.isTurn = true;
+							gui.gameController.opponent.isTurn = false;
+						} else {
+							gui.gameController.player.isTurn = false;
+							gui.gameController.opponent.isTurn = true;
+						}
 					this.gui.addClientMessage(receive);
 				} else if (object instanceof Ship) {
 					Ship ship = (Ship) object;

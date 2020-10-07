@@ -1,7 +1,5 @@
 package ProblemDomain;
 
-import Board.Coordinate;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -14,9 +12,9 @@ import java.util.ArrayList;
  */
 
 public class Ship implements Serializable {
-    int shipSize;
     ArrayList<Coordinate> coordinates;
     ShipType shipType;
+    int shipSize;
     public enum ShipType {
         Battleship,
         Cruiser,

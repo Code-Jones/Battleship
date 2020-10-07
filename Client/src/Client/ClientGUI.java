@@ -205,23 +205,7 @@ public class ClientGUI {
         emptySouthPanel.setPreferredSize(new Dimension(50, 75));
 
         playerBoard = new GridBuilder(gameController, true);
-        opponentBoard = new GridBuilder(gameController, false); // fix to enemiesGrid
-
-        // I FUCKING HATE SWING
-        JPanel p = (JPanel) opponentBoard.getComponent(0);
-        Component[] ss = p.getComponents();
-        ArrayList<JPanel> test = new ArrayList<>();
-        for (Component s : ss) {
-            test.add((JPanel) s);
-        }
-        for (JPanel tile : test) {
-            for (MouseListener al : tile.getMouseListeners()) {
-                tile.removeMouseListener(al);
-            }
-            tile.setEnabled(false);
-            tile.setBackground(Color.red);
-        }
-
+        opponentBoard = new GridBuilder(gameController, false);
 
         panel.add(emptyNorthPanel, BorderLayout.NORTH);
         panel.add(emptySouthPanel, BorderLayout.SOUTH);
@@ -278,6 +262,7 @@ public class ClientGUI {
     public void sendMessage(Message message) {
         try {
             this.outputStream.writeObject(message);
+            this.outputStream.flush(); // <- added this
             addClientMessage(message);
         } catch (IOException e) {
             e.printStackTrace();
@@ -288,6 +273,7 @@ public class ClientGUI {
     public void sendShip(Ship ship) {
         try {
             this.outputStream.writeObject(ship);
+            this.outputStream.flush(); // <- added this
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -310,6 +296,7 @@ public class ClientGUI {
             Thread thread = new Thread(serverHandler);
 
             thread.start();
+            sendMessage(new Message("Admin", "is my turn?"));
         } catch (IOException e) {
             e.printStackTrace();
             this.addClientMessage(new Message(this.username, "Unable to connect"));

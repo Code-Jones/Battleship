@@ -1,5 +1,6 @@
 package ProblemDomain;
 
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -22,18 +23,23 @@ public class Ship implements Serializable {
         Destroyer,
         Submarine
     }
-
     // old
     public Ship(ArrayList<Coordinate> coordinates, ShipType shipType) {
         this.coordinates = coordinates;
         this.shipType = shipType;
     }
-
     // new
     public Ship(ArrayList<Coordinate> coordinates, ShipType shipType, int shipSize) {
         this.coordinates = coordinates;
         this.shipType = shipType;
         this.shipSize = shipSize;
+    }
+
+    public void setShipCoordinates(ArrayList<Coordinate> coordinates, String shipType) {
+        for (Coordinate coordinate : coordinates) {
+            coordinate.setPartOfShip(true, ShipType.valueOf(shipType));
+            ShipType.valueOf(shipType);
+        }
     }
 
     @Override
@@ -42,13 +48,6 @@ public class Ship implements Serializable {
                 "coordinates=" + coordinates +
                 ", shipType=" + shipType +
                 '}';
-    }
-
-    public void setShipCoordinates(ArrayList<Coordinate> coordinates, String shipType) {
-        for (Coordinate coordinate : coordinates) {
-            coordinate.setPartOfShip(true, ShipType.valueOf(shipType));
-            ShipType.valueOf(shipType);
-        }
     }
 
     public boolean isShipHit(Coordinate hit) {
@@ -63,7 +62,7 @@ public class Ship implements Serializable {
 
     public boolean isShipSunk() {
         for (Coordinate coordinate : this.coordinates) {
-            if (!coordinate.isHit()) {
+            if(!coordinate.isHit()) {
                 return false;
             }
         }
@@ -76,7 +75,7 @@ public class Ship implements Serializable {
 
     public boolean isShip(Ship ship) {
         for (int i = 0; i < ship.coordinates.size(); i++) {
-            if (!ship.coordinates.get(i).isCoordinate(this.coordinates.get(i))) {
+            if (!ship.coordinates.get(i).isCoordinate(this.coordinates.get(i))){
                 return false;
             }
         }
@@ -98,5 +97,4 @@ public class Ship implements Serializable {
     public void setShipType(ShipType shipType) {
         this.shipType = shipType;
     }
-
 }

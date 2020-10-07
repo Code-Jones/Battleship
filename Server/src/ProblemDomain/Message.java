@@ -23,7 +23,11 @@ public class Message implements Serializable {
 		this.username = username;
 		this.message = message;
 	}
-	
+
+	public String getUsername() {
+		return username;
+	}
+
 	public Date getDate() {
 		return this.date;
 	}

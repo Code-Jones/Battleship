@@ -27,19 +27,35 @@ public class InputOutputHandler implements Runnable {
 
     @Override
     public void run() {
+        boolean turn = true;
         while (!this.input.getSocket().isClosed() && !this.output.getSocket().isClosed()) {
             try {
                 // receives generic object, then checks instanceof to find object type
                 Object object = this.input.getObjectInput().readObject();
                 if (object instanceof Message) {
                     Message message = (Message) object;
+                    // sets who's turn it is
+                    //todo could be improved / this is super quick fix / change to have admin attribute so you can print username -> turn
+                    if (message.getUsername().equals("Admin") && message.getMessage().equals("is my turn?")) {
+                        if (turn) {
+                            turn = false;
+                            this.output.getObjectOutput().writeObject(new Message("Admin", "false"));
+//                            this.output.getObjectOutput().flush(); // <- added this
+                        } else {
+                            turn = true;
+                            this.output.getObjectOutput().writeObject(new Message("Admin", "true"));
+//                            this.output.getObjectOutput().flush(); // <- added this
+                        }
+                    }
                     ServerGUI.addServerMessage(message);
                     this.output.getObjectOutput().writeObject(message);
+//                    this.output.getObjectOutput().flush(); // <- added this
                 } else if (object instanceof Ship) {
                     System.out.println("ship here");
 					Ship ship = (Ship) object;
 					ServerGUI.addServerMessage(new Message("test", "Received ship" + ship.getShipType()));
 					this.output.getObjectOutput().writeObject(ship);
+//                    this.output.getObjectOutput().flush(); // <- added this
                 }
             } catch (IOException | ClassNotFoundException e) {
                 System.out.println("sent something, not message");

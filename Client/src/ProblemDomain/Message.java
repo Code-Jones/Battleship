@@ -31,6 +31,10 @@ public class Message implements Serializable {
 	public String getMessage() {
 		return this.message;
 	}
+
+	public String getUsername() {
+		return username;
+	}
 	
 	public String toString() {
 		SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");

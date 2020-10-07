@@ -1,6 +1,4 @@
-package Board;
-
-import ProblemDomain.Ship;
+package ProblemDomain;
 
 import java.io.Serializable;
 
