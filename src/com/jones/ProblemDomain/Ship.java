@@ -10,7 +10,7 @@ public class Ship implements Serializable {
     public enum ShipType {
         Battleship,
         Cruiser,
-        Aircraft,
+        AirCraft,
         Destroyer,
         Submarine
     }
@@ -26,13 +26,14 @@ public class Ship implements Serializable {
     ShipType shipType;
 
     public Ship(ArrayList<Coordinate> coordinates, ShipType shipType) {
+
         this.coordinates = coordinates;
         this.shipType = shipType;
     }
 
     public void setShipCoordinates(ArrayList<Coordinate> coordinates, String shipType) {
         for (Coordinate coordinate : coordinates) {
-            coordinate.setPartOfShip(true);
+            coordinate.setPartOfShip(true, ShipType.valueOf(shipType));
             ShipType.valueOf(shipType);
         }
     }

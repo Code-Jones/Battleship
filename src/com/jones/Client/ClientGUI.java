@@ -31,7 +31,11 @@ public class ClientGUI {
     JPanel opponentBoard;
     MouseListener setPointerListener;
     GameController gameController;
+    public Ship.ShipType currentShipType;
+    public ActionListener comboBoxLister;
+    JComboBox<String> comboBox;
 
+    //constructor
     public ClientGUI(String title, GameController gameController) {
 
         //networks stuff
@@ -54,6 +58,7 @@ public class ClientGUI {
         this.frame.setSize(900, 500);
 
         //temp
+        this.currentShipType = Ship.ShipType.Battleship;
         this.gameController = gameController;
         this.isHorizontal = true;
         setListeners();
@@ -83,42 +88,29 @@ public class ClientGUI {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 e.getComponent().setBackground(Color.YELLOW);
-
-
-//                if (isHorizontal) {
-//                    for (int i = x; i < (x + 5) ; i++) {
-//                        e.getComponent().setBackground(Color.RED);
-//                    }
-//                }
             }
         };
 
-//        this.setPointerListener = new MouseAdapter() {
-//            @Override
-//            public void mouseClicked(MouseEvent e) {
-//                super.mouseClicked(e);
-//                System.out.println(e.getPoint().toString());
-//            }
-//        };
-
-        this.setShipsListener = new MouseAdapter() {
+       this.setShipsListener = new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 e.getComponent().setBackground(Color.YELLOW);
-//                String[] cord = e.getSource().toString().split(" ");
-//                int x = Integer.parseInt(cord[0]);
-//                int y = Integer.parseInt(cord[1]);
-//
-//
-//                System.out.println("x: " + x + " y: " + y);
+                String[] cord = e.getSource().toString().split(" ");
+                int x = Integer.parseInt(cord[0]);
+                int y = Integer.parseInt(cord[1]);
 
-//                addToSetShipList(x, y);
+
+                System.out.println("x: " + x + " y: " + y);
             }
         };
 
-    }
+//       this.comboBoxLister = e -> {
+//
+//       }
 
+
+    }
 
     private void buildGUI() {
         JPanel mainPanel = new JPanel();
@@ -154,15 +146,30 @@ public class ClientGUI {
         final JPanel panel4 = new JPanel();
         panel4.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
         panel.add(panel4, BorderLayout.CENTER);
-        JComboBox<String> comboBox1 = new JComboBox<>();
-        final DefaultComboBoxModel<String> defaultComboBoxModel1 = new DefaultComboBoxModel<>();
+
+        
+        comboBox = new JComboBox<>();
+        final DefaultComboBoxModel<String> defaultComboBoxModel1;
+        defaultComboBoxModel1 = new DefaultComboBoxModel<>();
         defaultComboBoxModel1.addElement("Battleship");
         defaultComboBoxModel1.addElement("AirCraft");
         defaultComboBoxModel1.addElement("Cruiser");
         defaultComboBoxModel1.addElement("Submarine");
         defaultComboBoxModel1.addElement("Destroyer");
-        comboBox1.setModel(defaultComboBoxModel1);
-        panel4.add(comboBox1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        comboBox.setModel(defaultComboBoxModel1);
+        panel4.add(comboBox, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        comboBox.addActionListener(e -> {
+            String str = String.valueOf(comboBox.getSelectedItem());
+            System.out.println(comboBox.getItemCount());
+            if (gameController.getPlayer().fleet.size() != 5) {
+                this.currentShipType = Ship.ShipType.valueOf(str);
+                System.out.println(this.currentShipType);
+            } else {
+                comboBox.setEnabled(false);
+                panel.setVisible(false);
+            }
+        });
+
         final Spacer spacer1 = new Spacer();
         panel4.add(spacer1, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         return panel;
@@ -268,13 +275,22 @@ public class ClientGUI {
             InputStream inStream = socket.getInputStream();
             inputStream = new ObjectInputStream(inStream);
 
-            ServerHandler serverHandler = new ServerHandler(this, socket, inputStream, outputStream);
+            ServerHandler serverHandler = new ServerHandler(this, socket, inputStream);
             Thread thread = new Thread(serverHandler);
 
             thread.start();
         } catch (IOException e) {
             e.printStackTrace();
             this.addClientMessage(new Message(this.username, "Unable to connect"));
+        }
+    }
+
+    public void removeBoatFromComboBox(Ship.ShipType shipType) {
+        for (int i = 0; i < comboBox.getItemCount(); i++) {
+            if (comboBox.getItemAt(i).equals(String.valueOf(shipType))) {
+                System.out.println(comboBox.getItemAt(i) + " removed");
+                comboBox.removeItem(comboBox.getItemAt(i));
+            }
         }
     }
 }

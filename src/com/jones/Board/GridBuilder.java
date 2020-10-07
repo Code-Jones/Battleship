@@ -87,8 +87,8 @@ public class GridBuilder extends Grid {
                 getComp3(thirdNextPoint);
                 getComp2(secondNextPoint);
 
-//              //fixme pls
-                gameController.getPlayer().addShip(coordinates, Ship.ShipType.Submarine); // Create new ship object
+//              //fixme get ship type from drop down menu before
+                gameController.getPlayer().addShip(coordinates, gameController.getGui().currentShipType); // Create new ship object
 
                 // should color after
                 if (gameController.getPlayer().getCord(x, y).isPartOfShip && gameController.getPlayer().getCord(x2, y2).isPartOfShip && gameController.getPlayer().getCord(x3, y3).isPartOfShip) {

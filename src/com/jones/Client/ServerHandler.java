@@ -12,7 +12,7 @@ public class ServerHandler implements Runnable {
 	private final Socket server;
 	private final ObjectInputStream inputStream;
 
-	public ServerHandler(ClientGUI gui, Socket server, ObjectInputStream inputStream, ObjectOutputStream outputStream) {
+	public ServerHandler(ClientGUI gui, Socket server, ObjectInputStream inputStream) {
 		this.gui = gui;
 		this.server = server;
 		this.inputStream = inputStream;

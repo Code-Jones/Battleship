@@ -1,5 +1,7 @@
 package com.jones.Board;
 
+import com.jones.ProblemDomain.Ship;
+
 import java.io.Serializable;
 
 public class Coordinate implements Serializable {
@@ -7,13 +9,14 @@ public class Coordinate implements Serializable {
     public int y;
     public boolean isPartOfShip;
     boolean hit;
+    Ship.ShipType shipType;
 
-    // for making new ships
-    public Coordinate(int x, int y, boolean isPartOfShip) {
-        this.x = x;
-        this.y = y;
-        this.isPartOfShip = true;
-    }
+    // for making new ships // i don't use this
+//    public Coordinate(int x, int y, boolean isPartOfShip) {
+//        this.x = x;
+//        this.y = y;
+//        this.isPartOfShip = true;
+//    }
 
     // for making default coordinates
     public Coordinate(int x, int y) {
@@ -21,6 +24,15 @@ public class Coordinate implements Serializable {
         this.y = y;
         this.hit = false;
         this.isPartOfShip = false;
+        this.shipType = null;
+    }
+    // for populating game board
+    public Coordinate(int x, int y, Ship.ShipType shipType) {
+        this.x = x;
+        this.y = y;
+        this.hit = false;
+        this.isPartOfShip = false;
+        this.shipType = shipType;
     }
 
     @Override
@@ -58,8 +70,9 @@ public class Coordinate implements Serializable {
         return isPartOfShip;
     }
 
-    public void setPartOfShip(boolean partOfShip) {
+    public void setPartOfShip(boolean partOfShip, Ship.ShipType shipType) {
         isPartOfShip = partOfShip;
+        this.shipType = shipType;
     }
 
     public boolean isEdge(Coordinate coordinate) {

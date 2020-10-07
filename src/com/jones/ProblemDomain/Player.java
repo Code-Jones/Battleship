@@ -25,7 +25,7 @@ public class Player {
     }
 
     // important method
-    public void addShip(ArrayList<Coordinate> coordinates, Ship.ShipType type) {
+    public void addShip(ArrayList<Coordinate> coordinates, Ship.ShipType shipType) {
         boolean goodToGo = true;
 
         if (fleet.size() < 5) {
@@ -53,13 +53,31 @@ public class Player {
             if (goodToGo) {
                 // probably could be more efficient
                 ArrayList<Coordinate> temp = getCoordinateFromLists(coordinates, globalGrid);
-                fleet.add(new Ship(temp, type));
+                fleet.add(new Ship(temp, shipType));
                 for (Coordinate cord : temp) {
-                    cord.setPartOfShip(true);
+                    cord.setPartOfShip(true, shipType);
                 }
             }
             // for testing
             System.out.println("Fleet size : " + fleet.size());
+        }
+
+        switch (String.valueOf(shipType)) {
+            case "AirCraft":
+                gameController.getGui().removeBoatFromComboBox(Ship.ShipType.AirCraft);
+                break;
+            case "Battleship":
+                gameController.getGui().removeBoatFromComboBox(Ship.ShipType.Battleship);
+                break;
+            case "Cruiser":
+                gameController.getGui().removeBoatFromComboBox(Ship.ShipType.Cruiser);
+                break;
+            case "Destroyer":
+                gameController.getGui().removeBoatFromComboBox(Ship.ShipType.Destroyer);
+                break;
+            case "Submarine":
+                gameController.getGui().removeBoatFromComboBox(Ship.ShipType.Submarine);
+                break;
         }
         if (fleet.size() == 5) {
             sendFleetToServer(fleet);
@@ -70,10 +88,9 @@ public class Player {
     public void sendFleetToServer(ArrayList<Ship> fleet) {
         for (Ship ship : fleet) {
             gameController.getGui().sendShip(ship);
-            System.out.println("\n" + Arrays.toString(ship.coordinates.toArray()));
+            System.out.println("\n" + ship.toString());
         }
     }
-
 
     public Coordinate getCord(int x, int y) {
         for (Coordinate coordinate : globalGrid) {
@@ -107,7 +124,24 @@ public class Player {
     public void addToFleet(Ship ship) {
         fleet.add(ship);
         if (fleet.size() == 5) {
+            populateOpponentBoard();
+        }
+    }
 
+    // populate the opponents board so that when a missile
+    // hits it i know. Doesn't have to show anything on the gui
+    private void populateOpponentBoard() {
+        //wow so efficient !
+        for (Coordinate coordinate : globalGrid) {
+            for (Ship ship : fleet) {
+                for (Coordinate shipCoordinate : ship.getCoordinates()) {
+                    if (coordinate.isCoordinate(shipCoordinate)) {
+                        System.out.println(shipCoordinate.toString() + "clearly working ? ");
+                        coordinate.setPartOfShip(true, ship.shipType); // fixme stopped right here
+                    }
+                }
+
+            }
         }
     }
 }
