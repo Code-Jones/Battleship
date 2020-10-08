@@ -4,9 +4,12 @@ import Client.GameController;
 import ProblemDomain.Coordinate;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 
 
@@ -22,6 +25,7 @@ public class GridBuilder extends Grid {
     public boolean isPlayer;
     public MouseListener setShipListener;
     public MouseListener setGamePlayListener;
+    public ChangeListener makeMissileListener;
     private Point firstPoint = new Point(0, 0);
     private Point secondNextPoint = new Point(0, 0);
     private Point thirdNextPoint = new Point(0, 0);
@@ -30,11 +34,11 @@ public class GridBuilder extends Grid {
     private JPanel thirdNextCell;
     private JPanel tile;
 
+
     public GridBuilder(GameController gameController, boolean isPlayer) {
         super(isPlayer); // builds grid here
         this.gameController = gameController;
         this.isPlayer = isPlayer;
-//        this.tile = makeSetUpTile(isPlayer);
     }
 
     public JPanel getJpanel(Point newPoint) {
@@ -133,25 +137,29 @@ public class GridBuilder extends Grid {
         this.setGamePlayListener = new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                System.out.println(gameController.getGameState());
                 if (gameController.getGameState().equals(GameController.GameState.PLAYING)) {
+                    // clicks at point
                     Point point = tile.getLocation();
+                    // turn into x / y the grid knows
                     int x = (int) (point.getX() / 25 + 1);
                     int y = (int) (point.getY() / 25 + 1);
 
-                    // not working but is....
+                    //
                     JPanel cell = getComponentAt(point);
                     Coordinate cord = gameController.getOpponent().getCord(x, y);
 
-                    if (cord.isPartOfShip() && !cord.isHit()) {
+                    if (cord.isPartOfShip()) {
                         System.out.println(cord.toString() + " is a hit");
                         gameController.getOpponent().getCord(x, y).setHit(true);
                         cell.setBackground(Color.yellow);
-                        gameController.getGui().sendCord(gameController.getOpponent().getCord(x, y));
                     } else {
                         System.out.println(cord.toString() + " is a miss");
                         cell.setBackground(Color.GRAY);
+
                     }
+                    cell.setEnabled(false);
+                    cell.removeMouseListener(this);// fixme might need to get rid of this
+                    gameController.getGui().sendCord(gameController.getOpponent().getCord(x, y));
 
                 } else {
                     tile.setEnabled(false);
@@ -180,6 +188,78 @@ public class GridBuilder extends Grid {
             }
         };
     }
+
+    public void makeMissileListener(JPanel tile) {
+        this.makeMissileListener = evt -> {
+            System.out.println("event tostring : " + evt.toString());
+            System.out.println("event source : " + evt.getSource());
+            // clicks at point
+            Point point = tile.getLocation();
+            // turn into x / y the grid knows
+            int x = (int) (point.getX() / 25 + 1);
+            int y = (int) (point.getY() / 25 + 1);
+
+            JPanel panelAtThisTile = getComponentAt(point);
+            Coordinate playerCordOfThisTile = gameController.getPlayer().getCord(x, y);
+
+            if (playerCordOfThisTile.isHit()) {
+                System.out.println(" this is it");
+                panelAtThisTile.setBackground(Color.red);
+            }
+        };
+    }
+    // can't get this to work
+//    public void makeMissileListener(JPanel tile) {
+//        this.makeMissileListener = evt -> {
+//
+//            if (gameController.getGameState().equals(GameController.GameState.PLAYING)) {
+//                do {
+//                    System.out.println("event property : " + evt.getPropertyName());
+//                    System.out.println("event source : " + evt.getSource());
+//                    System.out.println("event new value : " + evt.getNewValue());
+//                    Point pnt = (Point) evt.getSource();
+//                    int x = (int) (pnt.getX() / 25 + 1);
+//                    int y = (int) (pnt.getY() / 25 + 1);
+//                    JPanel cell = (JPanel) getComponentAt(x, y); // change
+//                    if (gameController.getPlayer().getCord(x, y).isHit()) {
+//                        System.out.println(" this is it");
+//                        cell.setBackground(Color.red);
+//                    }
+//                    if (gameController.getGameState().equals(GameController.GameState.FINISH) {
+//                        break;
+//                    }
+//                } while (true);
+//            }
+//        };
+//    }
+
+//    public void makeMissileListener(JPanel tile) {
+//        // here's a property change listener nick
+//        // i didn't even use a lambda expression so you can read it
+//        this.makeMissileListener = new PropertyChangeListener() {
+//            @Override
+//            public void propertyChange(PropertyChangeEvent evt) {
+//
+//                if (evt.getPropertyName()) {
+//                    System.out.println("this is state -<");
+//                }
+//                 i need the coordinate behind the panel
+//                System.out.println(evt.getSource());
+//                JPanel panel = (JPanel) evt.getSource();
+//                    Point pnt = (Point) evt.getSource();
+//                int x = (int) (pnt.getX() / 25 + 1);
+//                int y = (int) (pnt.getY() / 25 + 1);
+//                JPanel cell = getComponentAt();
+//                if (gameController.getPlayer().getCord(x, y).isHit()) {
+//                     get cord from players grid.
+//                    Coordinate cord = gameController.getPlayer().getCord(x, y);
+//                    if (cord.isHit()) {
+//                        cell.setBackground(Color.RED);
+//                    }
+//                }
+//            }
+//        };
+//    }
 
     // not working / do the shitty way
     /**

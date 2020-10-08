@@ -34,20 +34,15 @@ GamePlay {
 
 
 // todo current issue
-    -> start game done
-        -> playing state done
-            -> make hit listener done
-            -> send that to server
-            -> update board with hit
-            -> check if ship sunk or win
-            -> change state
-        -> make win conditions
+        -> make win conditions / sorta done, will need testing
+        -> change state
             -> ask if to rematch
             -> end game and disconnect
                 -> send server disconnect message
 
 //todo extra
+    -> set up observer/ listener
     -> set up for ship sizes
     -> make it for vertical ships
     -> handle disconnecting errors
-
+    -> ship is made even is place is taken

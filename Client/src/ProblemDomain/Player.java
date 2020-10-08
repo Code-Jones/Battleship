@@ -87,7 +87,7 @@ public class Player {
                 }
             }
             // for testing
-            System.out.println("Fleet size : " + fleet.size());
+//            System.out.println("Fleet size : " + fleet.size());
         }
 
         // removes option after being built
@@ -118,7 +118,7 @@ public class Player {
     public void sendFleetToServer(ArrayList<Ship> fleet) {
         for (Ship ship : fleet) {
             gameController.getGui().sendShip(ship);
-            System.out.println("\n" + ship.toString());
+//            System.out.println("\n" + ship.toString());
         }
     }
 
@@ -129,6 +129,14 @@ public class Player {
             }
         } return null;
     }
+    // only used once
+//    public Coordinate getCoordinateFromCoordinate(Coordinate input, ArrayList<Coordinate> globalList) {
+//        for (Coordinate coordinate : globalList) {
+//            if (coordinate.getY() == input.getY() || coordinate.getX() == input.getX()) {
+//                return coordinate;
+//            }
+//        }
+//    }
 
     /**
      * Gets input coordinates from the users pointer, to match with the
@@ -175,30 +183,10 @@ public class Player {
             for (Ship ship : fleet) {
                 for (Coordinate shipCoordinate : ship.getCoordinates()) {
                     if (coordinate.isCoordinate(shipCoordinate)) {
-//                        System.out.println(shipCoordinate.toString() + "clearly working ? ");
-                        coordinate.setPartOfShip(true, ship.shipType); // fixme stopped right here
+                        coordinate.setPartOfShip(true, ship.shipType);
                     }
                 }
 
-            }
-        }
-        // for testing
-        System.out.println(fleet.get(0).toString());
-    }
-
-    public JPanel getPanelFromCord(int x, int y) {
-        // for player
-        return (JPanel) this.gameController.getGui().getPanelFromCord(x, y).getComponentAt(x, y);
-    }
-
-
-    public void sendMissile(Coordinate cord) {
-        for (Coordinate coordinate : globalGrid) {
-            if (coordinate.getX() == cord.getX() && coordinate.getY() == cord.getY()) {
-                System.out.println("test : found cord");
-                System.out.println(coordinate.isPartOfShip());
-                coordinate.setHit(true);
-                getPanelFromCord(coordinate.x, coordinate.y).setBackground(Color.red);
             }
         }
     }

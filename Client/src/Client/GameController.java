@@ -8,7 +8,7 @@ import java.util.ArrayList;
 /**
  * @author Matt Jones
  * @version 1
- *
+ * <p>
  * Main game controller that handles the connection for players,
  * gui, and server. Also controls game state to make game work in stages
  */
@@ -20,50 +20,31 @@ public class GameController {
     ClientGUI gui;
     GameState currentGameState;
 
-
-
-    public enum GameState {
-        SETUP,
-        PLAYING,
-        FINISH
-    }
-
     public GameController() {
+        this.currentGameState = GameState.SETUP;
         this.globalGridPlayer = new ArrayList<>();
         this.globalGridOpponent = new ArrayList<>();
         this.player = new Player(true, globalGridPlayer, this);
         this.opponent = new Player(false, globalGridOpponent, this);
-
-        // do i need this?
-//        List<PropertyChangeListener> observers = new ArrayList<>();
-//        observers.add(player);
-//        observers.add(opponent);
-
     }
 
     public static void main(String[] args) {
         GameController gameController = new GameController();
         gameController.setUp();
-
     }
-//    public void progressGameState() {
-//        GameState.
-//
-//    }
 
     private void setUp() {
         this.gui = new ClientGUI("Battleship", this);
-
-        this.currentGameState = GameState.SETUP;
         System.out.println("Setup Started");
-    }
-    public void setGameState(GameState gameState) {
-        this.currentGameState = gameState;
-        System.out.println("Game state changed to : " + gameState);
     }
 
     public GameState getGameState() {
         return currentGameState;
+    }
+
+    public void setGameState(GameState gameState) {
+        this.currentGameState = gameState;
+        System.out.println("Game state changed to : " + gameState);
     }
 
     public Player getPlayer() {
@@ -76,5 +57,11 @@ public class GameController {
 
     public Player getOpponent() {
         return this.opponent;
+    }
+
+    public enum GameState {
+        SETUP,
+        PLAYING,
+        FINISH
     }
 }

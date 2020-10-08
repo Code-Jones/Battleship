@@ -11,15 +11,16 @@ import com.intellij.uiDesigner.core.Spacer;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.*;
 import java.net.Socket;
-import java.util.ArrayList;
 
 /**
  * @author Matt Jones
  * @version 1
- *
+ * <p>
  * Client Gui that bridges all interaction with the user
  * and the rest of the application. Client gui also starts
  * the connection to the server and hands it over to a
@@ -35,8 +36,6 @@ public class ClientGUI {
     public ObjectInputStream inputStream;
     public Ship.ShipType currentShipType;
     JList<Message> chatList;
-    MouseListener playModeListener;
-    MouseListener setShipsListener;
     boolean isHorizontal;
     JPanel playerBoard;
     JPanel opponentBoard;
@@ -47,11 +46,14 @@ public class ClientGUI {
     public ClientGUI(String title, GameController gameController) {
 
         //networks stuff
-        // fixme change this before submit
-//        this.username = JOptionPane.showInputDialog("Enter your username");
-        this.username = "matt";
-        this.ip = "localhost";
-        this.port = 1234;
+        // fixme do we really need the ip and port dialog?
+        this.username = JOptionPane.showInputDialog("Enter your username");
+        this.ip = JOptionPane.showInputDialog("Enter localhost");
+        this.port = Integer.parseInt(JOptionPane.showInputDialog("Enter your port"));
+
+//        this.username = "matt";
+//        this.ip = "localhost";
+//        this.port = 1234;
 
         // frame stuff
         this.frame = new JFrame("Battleship");
@@ -64,7 +66,7 @@ public class ClientGUI {
             }
         });
         this.frame.setTitle(title);
-        this.frame.setSize(900, 500);
+        this.frame.setSize(875, 500);
         this.frame.setResizable(false);
 
         //extra
@@ -144,6 +146,7 @@ public class ClientGUI {
             } else {
                 comboBox.setEnabled(false);
                 panel.setVisible(false);
+                this.frame.setSize(750, 500);
             }
         });
 
@@ -215,6 +218,7 @@ public class ClientGUI {
     }
 
     public JPanel getPanelFromCord(int x, int y) {
+        // player board only rn
         return (JPanel) this.playerBoard.getComponentAt(x, y);
     }
 
